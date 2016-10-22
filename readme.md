@@ -1,0 +1,95 @@
+# rehype-autolink-headings [![Build Status][travis-badge]][travis] [![Coverage Status][codecov-badge]][codecov]
+
+Automatically add links to headings (h1-h6) with [**rehype**][rehype].
+
+## Installation
+
+[npm][]:
+
+```bash
+npm install rehype-autolink-headings
+```
+
+## Usage
+
+Say we have the following fragment:
+
+```html
+<h1>Lorem ipsum 😪</h1>
+<h2>dolor—sit—amet</h2>
+<h3>consectetur &amp; adipisicing</h3>
+<h4>elit</h4>
+<h5>elit</h5>
+```
+
+And our script, `example.js`, looks as follows:
+
+```javascript
+var fs = require('fs');
+var rehype = require('rehype');
+var slug = require('rehype-slug');
+var link = require('rehype-autolink-headings');
+
+var doc = fs.readFileSync('fragment.html');
+
+rehype().use(slug).use(link).process(doc, {fragment: true}, function (err, file) {
+  if (err) throw err;
+  console.log(String(file));
+});
+```
+
+Now, running `node example` yields:
+
+```html
+<h1 id="lorem-ipsum-"><a aria-hidden="true" href="#lorem-ipsum-"><span class="icon icon-link"></span></a>Lorem ipsum 😪</h1>
+<h2 id="dolorsitamet"><a aria-hidden="true" href="#dolorsitamet"><span class="icon icon-link"></span></a>dolor—sit—amet</h2>
+<h3 id="consectetur--adipisicing"><a aria-hidden="true" href="#consectetur--adipisicing"><span class="icon icon-link"></span></a>consectetur &#x26; adipisicing</h3>
+<h4 id="elit"><a aria-hidden="true" href="#elit"><span class="icon icon-link"></span></a>elit</h4>
+<h5 id="elit-1"><a aria-hidden="true" href="#elit-1"><span class="icon icon-link"></span></a>elit</h5>
+```
+
+## API
+
+### `rehype().use(link[, options])`
+
+Adds links to headings (h1-h6) with an `id`
+
+###### `options`
+
+*   `behavior` (`string`, default: `prepend`)
+    — How to add a link:
+    *   `'prepend'` and `'append'` inserts a link with `content`
+        in it respectively before or after the heading contents;
+    *   `'wrap'` wraps a link around the current heading contents.
+*   `properties` (`Object`, default: `{}` if `'wrap'`,
+    `{ariaHidden: true}` otherwise)
+    — Properties for the added link;
+*   `content` (`Node` or `Array.<Node>`, default: a `span` element
+    with `icon` and `icon-link` classes)
+    — Content to add in link.  Ignored if `'wrap'`.
+
+## Related
+
+*   [**rehype-slug**](https://github.com/wooorm/rehype-slug).
+
+## License
+
+[MIT][license] © [Titus Wormer][author]
+
+<!-- Definitions -->
+
+[travis-badge]: https://img.shields.io/travis/wooorm/rehype-autolink-headings.svg
+
+[travis]: https://travis-ci.org/wooorm/rehype-autolink-headings
+
+[codecov-badge]: https://img.shields.io/codecov/c/github/wooorm/rehype-autolink-headings.svg
+
+[codecov]: https://codecov.io/github/wooorm/rehype-autolink-headings
+
+[npm]: https://docs.npmjs.com/cli/install
+
+[license]: LICENSE
+
+[author]: http://wooorm.com
+
+[rehype]: https://github.com/wooorm/rehype

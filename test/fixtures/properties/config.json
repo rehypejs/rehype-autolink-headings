@@ -1,0 +1,6 @@
+{
+  "properties": {
+    "className": ["foo", "bar", "baz"],
+    "dataQux": "quux"
+  }
+}

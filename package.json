@@ -1,0 +1,68 @@
+{
+  "name": "rehype-autolink-headings",
+  "version": "0.0.0",
+  "description": "Add links to headings in HTML",
+  "license": "MIT",
+  "keywords": [
+    "rehype",
+    "plugin",
+    "heading",
+    "link",
+    "html"
+  ],
+  "repository": "https://github.com/wooorm/rehype-autolink-headings",
+  "bugs": "https://github.com/wooorm/rehype-autolink-headings/issues",
+  "author": "Titus Wormer <tituswormer@gmail.com> (http://wooorm.com)",
+  "contributors": [
+    "Titus Wormer <tituswormer@gmail.com> (http://wooorm.com)"
+  ],
+  "files": [
+    "index.js"
+  ],
+  "dependencies": {
+    "hast-util-has-property": "^1.0.0",
+    "hast-util-is-element": "^1.0.0",
+    "unist-util-visit": "^1.1.0",
+    "xtend": "^4.0.1"
+  },
+  "devDependencies": {
+    "bail": "^1.0.1",
+    "browserify": "^13.0.0",
+    "esmangle": "^1.0.0",
+    "is-hidden": "^1.0.1",
+    "negate": "^1.0.0",
+    "nyc": "^8.3.1",
+    "rehype": "^3.0.0",
+    "remark-cli": "^2.0.0",
+    "remark-preset-wooorm": "^1.0.0",
+    "tape": "^4.0.0",
+    "to-vfile": "^2.1.1",
+    "xo": "^0.17.0"
+  },
+  "scripts": {
+    "build-md": "remark . --quiet --frail",
+    "build-bundle": "browserify index.js --bare -s rehypeAutolinkHeadings > rehype-autolink-headings.js",
+    "build-mangle": "esmangle rehype-autolink-headings.js > rehype-autolink-headings.min.js",
+    "build": "npm run build-md && npm run build-bundle && npm run build-mangle",
+    "lint": "xo",
+    "test-api": "node test/index.js",
+    "test-coverage": "nyc --reporter lcov tape test/index.js",
+    "test": "npm run build && npm run lint && npm run test-coverage"
+  },
+  "nyc": {
+    "check-coverage": true,
+    "lines": 100,
+    "functions": 100,
+    "branches": 100
+  },
+  "xo": {
+    "space": true,
+    "ignores": [
+      "rehype-autolink-headings.js"
+    ]
+  },
+  "remarkConfig": {
+    "output": true,
+    "presets": "wooorm"
+  }
+}

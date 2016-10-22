@@ -1,0 +1,7 @@
+{
+  "content": [
+    {"type": "comment", "value": "Foo "},
+    {"type": "text", "value": "bar"},
+    {"type": "comment", "value": " baz"}
+  ]
+}
