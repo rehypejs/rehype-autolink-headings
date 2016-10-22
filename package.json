@@ -1,6 +1,6 @@
 {
   "name": "rehype-autolink-headings",
-  "version": "0.0.0",
+  "version": "1.0.0",
   "description": "Add links to headings in HTML",
   "license": "MIT",
   "keywords": [
