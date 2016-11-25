@@ -1,6 +1,5 @@
 'use strict';
 
-/* Dependencies. */
 var fs = require('fs');
 var path = require('path');
 var bail = require('bail');
@@ -11,7 +10,6 @@ var negate = require('negate');
 var hidden = require('is-hidden');
 var autolink = require('..');
 
-/* Tests. */
 test('format', function (t) {
   var root = path.join(__dirname, 'fixtures');
 

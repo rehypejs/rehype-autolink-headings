@@ -1,15 +1,12 @@
 'use strict';
 
-/* Dependencies. */
 var xtend = require('xtend');
 var visit = require('unist-util-visit');
 var has = require('hast-util-has-property');
 var is = require('hast-util-is-element');
 
-/* Expose. */
 module.exports = autolink;
 
-/* Constants. */
 var headings = ['h1', 'h2', 'h3', 'h4', 'h5', 'h6'];
 var methods = {prepend: 'unshift', append: 'push'};
 var contentDefaults = {
@@ -18,7 +15,6 @@ var contentDefaults = {
   properties: {className: ['icon', 'icon-link']}
 };
 
-/* Attacher - Add links to headings. */
 function autolink(processor, options) {
   var settings = options || {};
   var props = settings.properties;
