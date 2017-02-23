@@ -31,13 +31,16 @@ test('format', function (t) {
       config = JSON.parse(fs.readFileSync(path.join(base, 'config.json')));
     } catch (err) {}
 
-    rehype().use(autolink, config).process(input, {fragment: true}, function (err) {
-      t.test(fixture, function (st) {
-        st.plan(3);
-        st.ifErr(err, 'shouldn’t throw');
-        st.equal(input.messages.length, 0, 'shouldn’t warn');
-        st.equal(String(input), String(output), 'should match');
+    rehype()
+      .data('settings', {fragment: true})
+      .use(autolink, config)
+      .process(input, function (err) {
+        t.test(fixture, function (st) {
+          st.plan(3);
+          st.ifErr(err, 'shouldn’t throw');
+          st.equal(input.messages.length, 0, 'shouldn’t warn');
+          st.equal(String(input), String(output), 'should match');
+        });
       });
-    });
   }
 });

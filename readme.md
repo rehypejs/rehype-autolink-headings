@@ -32,10 +32,14 @@ var link = require('rehype-autolink-headings');
 
 var doc = fs.readFileSync('fragment.html');
 
-rehype().use(slug).use(link).process(doc, {fragment: true}, function (err, file) {
-  if (err) throw err;
-  console.log(String(file));
-});
+rehype()
+  .data('settings', {fragment: true})
+  .use(slug)
+  .use(link)
+  .process(doc, function (err, file) {
+    if (err) throw err;
+    console.log(String(file));
+  });
 ```
 
 Now, running `node example` yields:

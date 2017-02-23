@@ -15,7 +15,7 @@ var contentDefaults = {
   properties: {className: ['icon', 'icon-link']}
 };
 
-function autolink(processor, options) {
+function autolink(options) {
   var settings = options || {};
   var props = settings.properties;
   var behavior = settings.behaviour || settings.behavior || 'prepend';
