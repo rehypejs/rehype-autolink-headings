@@ -63,18 +63,18 @@ Adds links to headings (h1-h6) with an `id`
 *   `behavior` (`string`, default: `prepend`)
     — How to add a link:
     *   `'prepend'` and `'append'` inserts a link with `content`
-        in it respectively before or after the heading contents;
+        in it respectively before or after the heading contents
     *   `'wrap'` wraps a link around the current heading contents.
 *   `properties` (`Object`, default: `{}` if `'wrap'`,
     `{ariaHidden: true}` otherwise)
-    — Properties for the added link;
+    — Properties for the added link
 *   `content` (`Node` or `Array.<Node>`, default: a `span` element
     with `icon` and `icon-link` classes)
-    — Content to add in link.  Ignored if `'wrap'`.
+    — Content to add in link.  Ignored if `'wrap'`
 
 ## Related
 
-*   [**rehype-slug**](https://github.com/wooorm/rehype-slug).
+*   [`rehype-slug`](https://github.com/wooorm/rehype-slug)
 
 ## License
 
