@@ -1,6 +1,6 @@
 'use strict';
 
-var xtend = require('xtend');
+var extend = require('extend');
 var visit = require('unist-util-visit');
 var has = require('hast-util-has-property');
 var is = require('hast-util-is-element');
@@ -12,7 +12,8 @@ var methods = {prepend: 'unshift', append: 'push'};
 var contentDefaults = {
   type: 'element',
   tagName: 'span',
-  properties: {className: ['icon', 'icon-link']}
+  properties: {className: ['icon', 'icon-link']},
+  children: []
 };
 
 function autolink(options) {
@@ -50,7 +51,7 @@ function autolink(options) {
 
   function inject(node) {
     var child = icon(node);
-    child.children = content.concat();
+    child.children = extend(true, content);
     node.children[methods[behavior]](child);
   }
 
@@ -58,7 +59,7 @@ function autolink(options) {
     return {
       type: 'element',
       tagName: 'a',
-      properties: xtend(props, {href: '#' + node.properties.id})
+      properties: extend({}, props, {href: '#' + node.properties.id})
     };
   }
 }
