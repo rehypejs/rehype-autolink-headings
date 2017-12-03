@@ -80,7 +80,7 @@ classes — Content to add in link.  Ignored if `'wrap'`
 
 ## Related
 
-*   [`rehype-slug`](https://github.com/wooorm/rehype-slug)
+*   [`rehype-slug`](https://github.com/rehypejs/rehype-slug)
 
 ## License
 
@@ -88,13 +88,13 @@ classes — Content to add in link.  Ignored if `'wrap'`
 
 <!-- Definitions -->
 
-[travis-badge]: https://img.shields.io/travis/wooorm/rehype-autolink-headings.svg
+[travis-badge]: https://img.shields.io/travis/rehypejs/rehype-autolink-headings.svg
 
-[travis]: https://travis-ci.org/wooorm/rehype-autolink-headings
+[travis]: https://travis-ci.org/rehypejs/rehype-autolink-headings
 
-[codecov-badge]: https://img.shields.io/codecov/c/github/wooorm/rehype-autolink-headings.svg
+[codecov-badge]: https://img.shields.io/codecov/c/github/rehypejs/rehype-autolink-headings.svg
 
-[codecov]: https://codecov.io/github/wooorm/rehype-autolink-headings
+[codecov]: https://codecov.io/github/rehypejs/rehype-autolink-headings
 
 [npm]: https://docs.npmjs.com/cli/install
 
@@ -102,4 +102,4 @@ classes — Content to add in link.  Ignored if `'wrap'`
 
 [author]: http://wooorm.com
 
-[rehype]: https://github.com/wooorm/rehype
+[rehype]: https://github.com/rehypejs/rehype

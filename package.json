@@ -10,8 +10,8 @@
     "link",
     "html"
   ],
-  "repository": "https://github.com/wooorm/rehype-autolink-headings",
-  "bugs": "https://github.com/wooorm/rehype-autolink-headings/issues",
+  "repository": "rehypejs/rehype-autolink-headings",
+  "bugs": "https://github.com/rehypejs/rehype-autolink-headings/issues",
   "author": "Titus Wormer <tituswormer@gmail.com> (http://wooorm.com)",
   "contributors": [
     "Titus Wormer <tituswormer@gmail.com> (http://wooorm.com)"
