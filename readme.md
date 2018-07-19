@@ -12,7 +12,7 @@ npm install rehype-autolink-headings
 
 ## Usage
 
-Say we have the following fragment:
+Say we have the following file, `fragment.html`:
 
 ```html
 <h1>Lorem ipsum 😪</h1>
@@ -25,21 +25,21 @@ Say we have the following fragment:
 And our script, `example.js`, looks as follows:
 
 ```javascript
-var fs = require('fs');
-var rehype = require('rehype');
-var slug = require('rehype-slug');
-var link = require('rehype-autolink-headings');
+var fs = require('fs')
+var rehype = require('rehype')
+var slug = require('rehype-slug')
+var link = require('rehype-autolink-headings')
 
-var doc = fs.readFileSync('fragment.html');
+var doc = fs.readFileSync('fragment.html')
 
 rehype()
   .data('settings', {fragment: true})
   .use(slug)
   .use(link)
-  .process(doc, function (err, file) {
-    if (err) throw err;
-    console.log(String(file));
-  });
+  .process(doc, function(err, file) {
+    if (err) throw err
+    console.log(String(file))
+  })
 ```
 
 Now, running `node example` yields:
