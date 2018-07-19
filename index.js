@@ -24,7 +24,7 @@ function autolink(options) {
   var fn = behavior === 'wrap' ? wrap : inject;
 
   if (behavior !== 'wrap' && !props) {
-    props = {ariaHidden: true};
+    props = {ariaHidden: 'true'};
   }
 
   if (content && typeof content === 'object' && !('length' in content)) {
