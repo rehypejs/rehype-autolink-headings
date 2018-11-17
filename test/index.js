@@ -29,7 +29,7 @@ test('format', function(t) {
 
     try {
       config = JSON.parse(fs.readFileSync(path.join(base, 'config.json')))
-    } catch (err) {}
+    } catch (error) {}
 
     rehype()
       .data('settings', {fragment: true})
