@@ -34,7 +34,7 @@ function autolink(options) {
   return transformer
 
   function transformer(tree) {
-    visit(tree, visitor)
+    visit(tree, 'element', visitor)
   }
 
   function visitor(node) {
