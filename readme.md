@@ -1,4 +1,9 @@
-# rehype-autolink-headings [![Build Status][travis-badge]][travis] [![Coverage Status][codecov-badge]][codecov]
+# rehype-autolink-headings
+
+[![Build][build-badge]][build]
+[![Coverage][coverage-badge]][coverage]
+[![Downloads][downloads-badge]][downloads]
+[![Chat][chat-badge]][chat]
 
 Automatically add links to headings (h1-h6) with [**rehype**][rehype].
 
@@ -96,13 +101,21 @@ repository, organisation, or community you agree to abide by its terms.
 
 <!-- Definitions -->
 
-[travis-badge]: https://img.shields.io/travis/rehypejs/rehype-autolink-headings.svg
+[build-badge]: https://img.shields.io/travis/rehypejs/rehype-autolink-headings.svg
 
-[travis]: https://travis-ci.org/rehypejs/rehype-autolink-headings
+[build]: https://travis-ci.org/rehypejs/rehype-autolink-headings
 
-[codecov-badge]: https://img.shields.io/codecov/c/github/rehypejs/rehype-autolink-headings.svg
+[coverage-badge]: https://img.shields.io/codecov/c/github/rehypejs/rehype-autolink-headings.svg
 
-[codecov]: https://codecov.io/github/rehypejs/rehype-autolink-headings
+[coverage]: https://codecov.io/github/rehypejs/rehype-autolink-headings
+
+[downloads-badge]: https://img.shields.io/npm/dm/rehype-autolink-headings.svg
+
+[downloads]: https://www.npmjs.com/package/rehype-autolink-headings
+
+[chat-badge]: https://img.shields.io/badge/join%20the%20community-on%20spectrum-7b16ff.svg
+
+[chat]: https://spectrum.chat/unified/rehype
 
 [npm]: https://docs.npmjs.com/cli/install
 
