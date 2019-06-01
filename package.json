@@ -1,9 +1,10 @@
 {
   "name": "rehype-autolink-headings",
   "version": "2.0.4",
-  "description": "Add links to headings in HTML",
+  "description": "rehype plugin to add links to headings",
   "license": "MIT",
   "keywords": [
+    "unified",
     "rehype",
     "plugin",
     "heading",
