@@ -41,7 +41,7 @@
     "xo": "^0.24.0"
   },
   "scripts": {
-    "format": "remark . -qfo && prettier --write '**/*.js' && xo --fix",
+    "format": "remark . -qfo && prettier --write \"**/*.js\" && xo --fix",
     "build-bundle": "browserify index.js -s rehypeAutolinkHeadings > rehype-autolink-headings.js",
     "build-mangle": "browserify index.js -s rehypeAutolinkHeadings -p tinyify > rehype-autolink-headings.min.js",
     "build": "npm run build-bundle && npm run build-mangle",
