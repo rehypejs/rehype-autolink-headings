@@ -3,19 +3,22 @@
 [![Build][build-badge]][build]
 [![Coverage][coverage-badge]][coverage]
 [![Downloads][downloads-badge]][downloads]
+[![Size][size-badge]][size]
+[![Sponsors][sponsors-badge]][collective]
+[![Backers][backers-badge]][collective]
 [![Chat][chat-badge]][chat]
 
-Automatically add links to headings (h1-h6) with [**rehype**][rehype].
+[**rehype**][rehype] plugin to automatically add links to headings (h1-h6).
 
-## Installation
+## Install
 
 [npm][]:
 
-```bash
+```sh
 npm install rehype-autolink-headings
 ```
 
-## Usage
+## Use
 
 Say we have the following file, `fragment.html`:
 
@@ -29,7 +32,7 @@ Say we have the following file, `fragment.html`:
 
 And our script, `example.js`, looks as follows:
 
-```javascript
+```js
 var fs = require('fs')
 var rehype = require('rehype')
 var slug = require('rehype-slug')
@@ -61,27 +64,29 @@ Now, running `node example` yields:
 
 ### `rehype().use(link[, options])`
 
-Adds links to headings (h1-h6) with an `id`
+Add links to headings (h1-h6) with an `id`.
 
 ##### `options`
 
 ###### `options.behavior`
 
-`string`, default: `prepend` — How to add a link:
+How to add a link (`string`, default: `prepend`).
+Can be:
 
-*   `'prepend'` and `'append'` inserts a link with `content`
-    in it respectively before or after the heading contents
-*   `'wrap'` wraps a link around the current heading contents.
+*   `'prepend'` and `'append'` — insert a link with `content` in it respectively
+    before or after the heading contents
+*   `'wrap'` — wrap a link around the current heading contents
 
 ###### `options.properties`
 
-`Object`, default: `{}` if `'wrap'`, `{ariaHidden: true}` otherwise
-— Properties for the added link.
+Properties for the added link (`Object`, default: `{}` if `'wrap'`,
+`{ariaHidden: true}` otherwise).
 
 ###### `options.content`
 
-`Node` or `Array.<Node>`, default: a `span` element with `icon` and `icon-link`
-classes — Content to add in link.  Ignored if `'wrap'`
+Content to add in link (`Node` or `Array.<Node>`, default: a `span` element
+with `icon` and `icon-link` classes).
+Ignored if `'wrap'`.
 
 ## Related
 
@@ -89,11 +94,13 @@ classes — Content to add in link.  Ignored if `'wrap'`
 
 ## Contribute
 
-See [`contributing.md` in `rehypejs/rehype`][contribute] for ways to get
-started.
+See [`contributing.md`][contributing] in [`rehypejs/.github`][health] for ways
+to get started.
+See [`support.md`][support] for ways to get help.
 
-This organisation has a [Code of Conduct][coc].  By interacting with this
-repository, organisation, or community you agree to abide by its terms.
+This project has a [Code of Conduct][coc].
+By interacting with this repository, organisation, or community you agree to
+abide by its terms.
 
 ## License
 
@@ -113,18 +120,32 @@ repository, organisation, or community you agree to abide by its terms.
 
 [downloads]: https://www.npmjs.com/package/rehype-autolink-headings
 
+[size-badge]: https://img.shields.io/bundlephobia/minzip/rehype-autolink-headings.svg
+
+[size]: https://bundlephobia.com/result?p=rehype-autolink-headings
+
+[sponsors-badge]: https://opencollective.com/unified/sponsors/badge.svg
+
+[backers-badge]: https://opencollective.com/unified/backers/badge.svg
+
+[collective]: https://opencollective.com/unified
+
 [chat-badge]: https://img.shields.io/badge/join%20the%20community-on%20spectrum-7b16ff.svg
 
 [chat]: https://spectrum.chat/unified/rehype
 
 [npm]: https://docs.npmjs.com/cli/install
 
+[health]: https://github.com/rehypejs/.github
+
+[contributing]: https://github.com/rehypejs/.github/blob/master/contributing.md
+
+[support]: https://github.com/rehypejs/.github/blob/master/support.md
+
+[coc]: https://github.com/rehypejs/.github/blob/master/code-of-conduct.md
+
 [license]: license
 
 [author]: https://wooorm.com
 
 [rehype]: https://github.com/rehypejs/rehype
-
-[contribute]: https://github.com/rehypejs/rehype/blob/master/contributing.md
-
-[coc]: https://github.com/rehypejs/rehype/blob/master/code-of-conduct.md
