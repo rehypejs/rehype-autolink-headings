@@ -99,6 +99,11 @@ Always be wary of user input and use [`rehype-sanitize`][sanitize].
 ## Related
 
 *   [`rehype-slug`](https://github.com/rehypejs/rehype-slug)
+    — Add `id`s to headings
+*   [`rehype-highlight`](https://github.com/rehypejs/rehype-highlight)
+    — Syntax highlight code blocks
+*   [`rehype-toc`](https://github.com/JS-DevTools/rehype-toc)
+    — Add a table of contents (TOC)
 
 ## Contribute
 
