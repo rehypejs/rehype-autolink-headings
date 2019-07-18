@@ -88,6 +88,14 @@ Content to add in link (`Node` or `Array.<Node>`, default: a `span` element
 with `icon` and `icon-link` classes).
 Ignored if `'wrap'`.
 
+## Security
+
+Use of `rehype-autolink-headings` can open you up to a
+[cross-site scripting (XSS)][xss] attack if you pass user provided content in
+`properties` or `content`.
+
+Always be wary of user input and use [`rehype-sanitize`][sanitize].
+
 ## Related
 
 *   [`rehype-slug`](https://github.com/rehypejs/rehype-slug)
@@ -149,3 +157,7 @@ abide by its terms.
 [author]: https://wooorm.com
 
 [rehype]: https://github.com/rehypejs/rehype
+
+[xss]: https://en.wikipedia.org/wiki/Cross-site_scripting
+
+[sanitize]: https://github.com/rehypejs/rehype-sanitize
