@@ -1,6 +1,6 @@
 {
   "name": "rehype-autolink-headings",
-  "version": "2.0.5",
+  "version": "3.0.0",
   "description": "rehype plugin to add links to headings",
   "license": "MIT",
   "keywords": [
