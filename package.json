@@ -6,6 +6,7 @@
   "keywords": [
     "unified",
     "rehype",
+    "rehype-plugin",
     "plugin",
     "heading",
     "link",
