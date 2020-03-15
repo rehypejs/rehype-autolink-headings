@@ -10,7 +10,7 @@ var negate = require('negate')
 var hidden = require('is-hidden')
 var autolink = require('..')
 
-test('format', function(t) {
+test('rehype-autolink-headings', function(t) {
   var root = path.join(__dirname, 'fixtures')
 
   fs.readdir(root, function(err, files) {
