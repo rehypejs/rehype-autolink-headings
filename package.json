@@ -13,6 +13,10 @@
   ],
   "repository": "rehypejs/rehype-autolink-headings",
   "bugs": "https://github.com/rehypejs/rehype-autolink-headings/issues",
+  "funding": {
+    "type": "opencollective",
+    "url": "https://opencollective.com/unified"
+  },
   "author": "Titus Wormer <tituswormer@gmail.com> (https://wooorm.com)",
   "contributors": [
     "Titus Wormer <tituswormer@gmail.com> (https://wooorm.com)"
