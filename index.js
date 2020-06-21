@@ -34,7 +34,7 @@ function autolink(options) {
     method = inject
 
     if (!props) {
-      props = {ariaHidden: 'true'}
+      props = {ariaHidden: 'true', tabIndex: -1}
     }
   }
 

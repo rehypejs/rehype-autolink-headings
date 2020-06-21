@@ -84,7 +84,8 @@ Supplying `prepend`, `append`, or `wrap` will ignore the `group` option.
 ###### `options.properties`
 
 Extra properties to set on the link (`Object?`).
-Defaults to `{ariaHidden: true}` when in `'prepend'` or `'append'` mode.
+Defaults to `{ariaHidden: true, tabIndex: -1}` when in `'prepend'` or
+`'append'` mode.
 
 ###### `options.content`
 
