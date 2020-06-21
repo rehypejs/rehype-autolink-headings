@@ -7,8 +7,10 @@ var is = require('hast-util-is-element')
 
 module.exports = autolink
 
+var splice = [].splice
+
 var headings = ['h1', 'h2', 'h3', 'h4', 'h5', 'h6']
-var methods = {prepend: 'unshift', append: 'push'}
+
 var contentDefaults = {
   type: 'element',
   tagName: 'span',
@@ -21,14 +23,19 @@ function autolink(options) {
   var props = settings.properties
   var behavior = settings.behaviour || settings.behavior || 'prepend'
   var content = settings.content || contentDefaults
-  var fn = behavior === 'wrap' ? wrap : inject
+  var group = settings.group
+  var method
 
-  if (behavior !== 'wrap' && !props) {
-    props = {ariaHidden: 'true'}
-  }
+  if (behavior === 'wrap') {
+    method = wrap
+  } else if (behavior === 'before' || behavior === 'after') {
+    method = around
+  } else {
+    method = inject
 
-  if (content && typeof content === 'object' && !('length' in content)) {
-    content = [content]
+    if (!props) {
+      props = {ariaHidden: 'true'}
+    }
   }
 
   return transformer
@@ -37,29 +44,65 @@ function autolink(options) {
     visit(tree, 'element', visitor)
   }
 
-  function visitor(node) {
+  function visitor(node, index, parent) {
     if (is(node, headings) && has(node, 'id')) {
-      fn(node)
+      return method(node, index, parent)
     }
-  }
-
-  function wrap(node) {
-    var child = icon(node)
-    child.children = node.children
-    node.children = [child]
   }
 
   function inject(node) {
-    var child = icon(node)
-    child.children = extend(true, content)
-    node.children[methods[behavior]](child)
+    var name = behavior === 'prepend' ? 'unshift' : 'push'
+
+    node.children[name](create(node, toProps(props), toChildren(content, node)))
+
+    return [visit.SKIP]
   }
 
-  function icon(node) {
+  function around(node, index, parent) {
+    var link = create(node, toProps(props), toChildren(content, node))
+    var grouping = group ? toNode(group, node) : undefined
+    var nodes = behavior === 'before' ? [link, node] : [node, link]
+
+    if (grouping) {
+      grouping.children = nodes
+      nodes = grouping
+    }
+
+    splice.apply(parent.children, [index, 1].concat(nodes))
+
+    return [visit.SKIP, index + nodes.length]
+  }
+
+  function wrap(node) {
+    node.children = [create(node, toProps(props), node.children)]
+
+    return [visit.SKIP]
+  }
+
+  function toProps(value) {
+    return deepAssign({}, value)
+  }
+
+  function toChildren(value, node) {
+    var result = toNode(value, node)
+    return Array.isArray(result) ? result : [result]
+  }
+
+  function toNode(value, node) {
+    if (typeof value === 'function') return value(node)
+    return deepAssign(Array.isArray(value) ? [] : {}, value)
+  }
+
+  function create(node, props, children) {
     return {
       type: 'element',
       tagName: 'a',
-      properties: extend({}, props, {href: '#' + node.properties.id})
+      properties: Object.assign({}, props, {href: '#' + node.properties.id}),
+      children: children
     }
+  }
+
+  function deepAssign(base, value) {
+    return extend(true, base, value)
   }
 }

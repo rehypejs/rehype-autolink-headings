@@ -70,23 +70,75 @@ Add links to headings (h1-h6) with an `id`.
 
 ###### `options.behavior`
 
-How to add a link (`string`, default: `prepend`).
-Can be:
+How to create links (`string`, default: `'prepend'`).
 
-*   `'prepend'` and `'append'` — insert a link with `content` in it respectively
-    before or after the heading contents
-*   `'wrap'` — wrap a link around the current heading contents
+*   `'prepend'` — inject link before the heading text
+*   `'append'` — inject link after the heading text
+*   `'wrap'` — wrap the whole heading text with the link
+*   `'before'` — insert link before the heading
+*   `'after'` — insert link after the heading
+
+Supplying `wrap` will ignore any value defined by the `content` option.
+Supplying `prepend`, `append`, or `wrap` will ignore the `group` option.
 
 ###### `options.properties`
 
-Properties for the added link (`Object`, default: `{}` if `'wrap'`,
-`{ariaHidden: true}` otherwise).
+Extra properties to set on the link (`Object?`).
+Defaults to `{ariaHidden: true}` when in `'prepend'` or `'append'` mode.
 
 ###### `options.content`
 
-Content to add in link (`Node` or `Array.<Node>`, default: a `span` element
-with `icon` and `icon-link` classes).
-Ignored if `'wrap'`.
+[**hast**][hast] nodes to insert in the link (`Function|Node|Children`).
+By default, the following is used:
+
+```js
+{
+  type: 'element',
+  tagName: 'span',
+  properties: {className: ['icon', 'icon-link']},
+  children: []
+}
+```
+
+If `behavior` is `wrap`, then `content` is ignored.
+
+If `content` is a function, it’s called with the current heading (`Node`) and
+should return one or more nodes:
+
+```js
+var toString = require('hast-util-to-string')
+var h = require('hastscript')
+
+// …
+
+function content(node) {
+  return [
+    h('span.visually-hidden', 'Read the “', toString(node), '” section'),
+    h('span.icon.icon-link', {ariaHidden: true})
+  ]
+}
+```
+
+###### `options.group`
+
+[**hast**][hast] node to wrap the heading and link with (`Function|Node`), if
+`behavior` is `before` or `after`.
+There is no default.
+
+If `behavior` is `prepend`, `append`, or `wrap`, then `group` is ignored.
+
+If `group` is a function, it’s called with the current heading (`Node`) and
+should return a hast node.
+
+```js
+var h = require('hastscript')
+
+// …
+
+function group(node) {
+  return h('.heading-' + node.charAt(1) + '-group')
+}
+```
 
 ## Security
 
@@ -160,6 +212,8 @@ abide by its terms.
 [license]: license
 
 [author]: https://wooorm.com
+
+[hast]: https://github.com/syntax-tree/hast
 
 [rehype]: https://github.com/rehypejs/rehype
 
