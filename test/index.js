@@ -10,10 +10,10 @@ var negate = require('negate')
 var hidden = require('is-hidden')
 var autolink = require('..')
 
-test('rehype-autolink-headings', function(t) {
+test('rehype-autolink-headings', function (t) {
   var root = path.join(__dirname, 'fixtures')
 
-  fs.readdir(root, function(err, files) {
+  fs.readdir(root, function (err, files) {
     bail(err)
     files = files.filter(negate(hidden))
     t.plan(files.length)
@@ -34,8 +34,8 @@ test('rehype-autolink-headings', function(t) {
     rehype()
       .data('settings', {fragment: true})
       .use(autolink, config)
-      .process(input, function(err) {
-        t.test(fixture, function(st) {
+      .process(input, function (err) {
+        t.test(fixture, function (st) {
           st.plan(3)
           st.ifErr(err, 'shouldn’t throw')
           st.equal(input.messages.length, 0, 'shouldn’t warn')
