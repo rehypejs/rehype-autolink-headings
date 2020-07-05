@@ -18,6 +18,8 @@
 npm install rehype-autolink-headings
 ```
 
+Note that `rehype-slug` is required and should be used/invoked before `rehype-autolink-headings`.
+
 ## Use
 
 Say we have the following file, `fragment.html`:
