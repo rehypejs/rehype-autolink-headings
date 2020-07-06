@@ -225,4 +225,3 @@ abide by its terms.
 
 [sanitize]: https://github.com/rehypejs/rehype-sanitize
 
-[slug]: https://github.com/rehypejs/rehype-slug
