@@ -18,8 +18,6 @@
 npm install rehype-autolink-headings
 ```
 
-Note that `rehype-slug` is required and should be used/invoked before `rehype-autolink-headings`.
-
 ## Use
 
 Say we have the following file, `fragment.html`:
@@ -67,6 +65,9 @@ Now, running `node example` yields:
 ### `rehype().use(link[, options])`
 
 Add links to headings (h1-h6) with an `id`.
+
+> **Note**: this plugin expects `id`s to already exist on headings.
+> One way to add those automatically, is [`rehype-slug`][slug] (see example).
 
 ##### `options`
 
@@ -153,7 +154,7 @@ Always be wary of user input and use [`rehype-sanitize`][sanitize].
 
 ## Related
 
-*   [`rehype-slug`](https://github.com/rehypejs/rehype-slug)
+*   [`rehype-slug`][slug]
     — Add `id`s to headings
 *   [`rehype-highlight`](https://github.com/rehypejs/rehype-highlight)
     — Syntax highlight code blocks
@@ -223,3 +224,5 @@ abide by its terms.
 [xss]: https://en.wikipedia.org/wiki/Cross-site_scripting
 
 [sanitize]: https://github.com/rehypejs/rehype-sanitize
+
+[slug]: https://github.com/rehypejs/rehype-slug
