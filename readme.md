@@ -66,6 +66,9 @@ Now, running `node example` yields:
 
 Add links to headings (h1-h6) with an `id`.
 
+> **Note**: this plugin expects `id`s to already exist on headings.
+> One way to add those automatically, is [`rehype-slug`][slug] (see example).
+
 ##### `options`
 
 ###### `options.behavior`
@@ -151,7 +154,7 @@ Always be wary of user input and use [`rehype-sanitize`][sanitize].
 
 ## Related
 
-*   [`rehype-slug`](https://github.com/rehypejs/rehype-slug)
+*   [`rehype-slug`][slug]
     — Add `id`s to headings
 *   [`rehype-highlight`](https://github.com/rehypejs/rehype-highlight)
     — Syntax highlight code blocks
@@ -221,3 +224,5 @@ abide by its terms.
 [xss]: https://en.wikipedia.org/wiki/Cross-site_scripting
 
 [sanitize]: https://github.com/rehypejs/rehype-sanitize
+
+[slug]: https://github.com/rehypejs/rehype-slug
