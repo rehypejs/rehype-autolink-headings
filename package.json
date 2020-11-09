@@ -33,10 +33,10 @@
     "unist-util-visit": "^2.0.0"
   },
   "devDependencies": {
-    "@types/hast": "^2.3.1",
+    "@types/hast": "^2.0.0",
     "bail": "^1.0.0",
     "browserify": "^16.0.0",
-    "dtslint": "^4.0.5",
+    "dtslint": "^4.0.0",
     "is-hidden": "^1.0.0",
     "negate": "^1.0.0",
     "nyc": "^15.0.0",
@@ -47,7 +47,7 @@
     "tape": "^5.0.0",
     "tinyify": "^2.0.0",
     "to-vfile": "^6.0.0",
-    "unified": "^9.2.0",
+    "unified": "^9.0.0",
     "xo": "^0.32.0"
   },
   "scripts": {
