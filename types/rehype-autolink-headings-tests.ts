@@ -9,6 +9,9 @@ unified().use(autolinkHeadings, {behavior: 'before'})
 unified().use(autolinkHeadings, {behavior: 'after'})
 unified().use(autolinkHeadings, {properties: {ariaHidden: true, tabIndex: -1}})
 unified().use(autolinkHeadings, {
+  properties: [{ariaHidden: true, tabIndex: -1}]
+})
+unified().use(autolinkHeadings, {
   content: {
     type: 'element',
     tagName: 'span',
