@@ -177,9 +177,9 @@ abide by its terms.
 
 <!-- Definitions -->
 
-[build-badge]: https://img.shields.io/travis/rehypejs/rehype-autolink-headings.svg
+[build-badge]: https://github.com/rehypejs/rehype-autolink-headings/workflows/main/badge.svg
 
-[build]: https://travis-ci.org/rehypejs/rehype-autolink-headings
+[build]: https://github.com/rehypejs/rehype-autolink-headings/actions
 
 [coverage-badge]: https://img.shields.io/codecov/c/github/rehypejs/rehype-autolink-headings.svg
 
