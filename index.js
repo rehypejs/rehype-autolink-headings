@@ -1,15 +1,13 @@
 'use strict'
 
 var extend = require('extend')
-var visit = require('unist-util-visit')
 var has = require('hast-util-has-property')
-var is = require('hast-util-is-element')
+var rank = require('hast-util-heading-rank')
+var visit = require('unist-util-visit')
 
 module.exports = autolink
 
 var splice = [].splice
-
-var headings = ['h1', 'h2', 'h3', 'h4', 'h5', 'h6']
 
 var contentDefaults = {
   type: 'element',
@@ -45,23 +43,23 @@ function autolink(options) {
   }
 
   function visitor(node, index, parent) {
-    if (is(node, headings) && has(node, 'id')) {
+    if (rank(node) && has(node, 'id')) {
       return method(node, index, parent)
     }
   }
 
   function inject(node) {
-    var name = behavior === 'prepend' ? 'unshift' : 'push'
-
-    node.children[name](create(node, toProps(props), toChildren(content, node)))
+    node.children[behavior === 'prepend' ? 'unshift' : 'push'](
+      create(node, extend(true, {}, props), toChildren(content, node))
+    )
 
     return [visit.SKIP]
   }
 
   function around(node, index, parent) {
-    var link = create(node, toProps(props), toChildren(content, node))
-    var grouping = group ? toNode(group, node) : undefined
+    var link = create(node, extend(true, {}, props), toChildren(content, node))
     var nodes = behavior === 'before' ? [link, node] : [node, link]
+    var grouping = group && toNode(group, node)
 
     if (grouping) {
       grouping.children = nodes
@@ -74,13 +72,9 @@ function autolink(options) {
   }
 
   function wrap(node) {
-    node.children = [create(node, toProps(props), node.children)]
+    node.children = [create(node, extend(true, {}, props), node.children)]
 
     return [visit.SKIP]
-  }
-
-  function toProps(value) {
-    return deepAssign({}, value)
   }
 
   function toChildren(value, node) {
@@ -90,7 +84,7 @@ function autolink(options) {
 
   function toNode(value, node) {
     if (typeof value === 'function') return value(node)
-    return deepAssign(Array.isArray(value) ? [] : {}, value)
+    return extend(true, Array.isArray(value) ? [] : {}, value)
   }
 
   function create(node, props, children) {
@@ -100,9 +94,5 @@ function autolink(options) {
       properties: Object.assign({}, props, {href: '#' + node.properties.id}),
       children: children
     }
-  }
-
-  function deepAssign(base, value) {
-    return extend(true, base, value)
   }
 }
