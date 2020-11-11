@@ -27,7 +27,7 @@
     "types/index.d.ts"
   ],
   "dependencies": {
-    "extend": "^3.0.1",
+    "extend": "^3.0.0",
     "hast-util-has-property": "^1.0.0",
     "hast-util-heading-rank": "^1.0.0",
     "unist-util-visit": "^2.0.0"
