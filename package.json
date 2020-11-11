@@ -23,7 +23,8 @@
     "Titus Wormer <tituswormer@gmail.com> (https://wooorm.com)"
   ],
   "files": [
-    "index.js"
+    "index.js",
+    "types/index.d.ts"
   ],
   "dependencies": {
     "extend": "^3.0.1",
@@ -32,8 +33,10 @@
     "unist-util-visit": "^2.0.0"
   },
   "devDependencies": {
+    "@types/hast": "^2.0.0",
     "bail": "^1.0.0",
     "browserify": "^16.0.0",
+    "dtslint": "^4.0.0",
     "is-hidden": "^1.0.0",
     "negate": "^1.0.0",
     "nyc": "^15.0.0",
@@ -44,6 +47,7 @@
     "tape": "^5.0.0",
     "tinyify": "^2.0.0",
     "to-vfile": "^6.0.0",
+    "unified": "^9.0.0",
     "xo": "^0.32.0"
   },
   "scripts": {
@@ -53,13 +57,17 @@
     "build": "npm run build-bundle && npm run build-mangle",
     "test-api": "node test",
     "test-coverage": "nyc --reporter lcov tape test/index.js",
-    "test": "npm run format && npm run build && npm run test-coverage"
+    "test-types": "dtslint types",
+    "test": "npm run format && npm run build && npm run test-coverage && npm run test-types"
   },
   "nyc": {
     "check-coverage": true,
     "lines": 100,
     "functions": 100,
-    "branches": 100
+    "branches": 100,
+    "ignores": [
+      "**/*.ts"
+    ]
   },
   "prettier": {
     "tabWidth": 2,
