@@ -106,7 +106,7 @@ By default, the following is used:
 
 If `behavior` is `wrap`, then `content` is ignored.
 
-If `content` is a function, it’s called with the current heading (`Node`) and
+If `content` is a function, it’s called with the current heading (`Element`) and
 should return one or more nodes:
 
 ```js
@@ -131,7 +131,7 @@ There is no default.
 
 If `behavior` is `prepend`, `append`, or `wrap`, then `group` is ignored.
 
-If `group` is a function, it’s called with the current heading (`Node`) and
+If `group` is a function, it’s called with the current heading (`Element`) and
 should return a hast node.
 
 ```js
