@@ -14,12 +14,17 @@ test('rehype-autolink-headings', function (t) {
   var root = path.join(__dirname, 'fixtures')
 
   t.test('fixtures', function (t) {
-    fs.readdir(root, function (err, files) {
-      bail(err)
+    fs.readdir(root, function (error, files) {
+      bail(error)
       files = files.filter(negate(hidden))
+
       t.plan(files.length)
 
-      files.forEach(one)
+      var index = -1
+
+      while (++index < files.length) {
+        one(files[index])
+      }
     })
 
     function one(fixture) {
@@ -36,9 +41,9 @@ test('rehype-autolink-headings', function (t) {
         rehype()
           .data('settings', {fragment: true})
           .use(autolink, config)
-          .process(input, function (err) {
+          .process(input, function (error) {
             t.plan(3)
-            t.ifErr(err, 'shouldn’t throw')
+            t.ifErr(error, 'shouldn’t throw')
             t.equal(input.messages.length, 0, 'shouldn’t warn')
             t.equal(String(input), String(output), 'should match')
           })
@@ -62,9 +67,9 @@ test('rehype-autolink-headings', function (t) {
           return {type: 'element', tagName: 'i', properties: {}, children: []}
         }
       })
-      .process('<h1 id=a>b</h1>', function (err, file) {
+      .process('<h1 id=a>b</h1>', function (error, file) {
         t.deepEqual(
-          [err, file.messages.length, String(file)],
+          [error, file.messages.length, String(file)],
           [null, 0, '<div><h1 id="a">b</h1><a href="#a"><i></i></a></div>']
         )
       })
