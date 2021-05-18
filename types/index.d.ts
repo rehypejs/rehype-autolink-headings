@@ -1,6 +1,6 @@
 // Minimum TypeScript Version: 3.5
 import {Plugin} from 'unified'
-import {Node, Properties} from 'hast'
+import {Element, Node, Properties} from 'hast'
 
 /**
  * Automatically add links to headings.
@@ -28,13 +28,13 @@ declare namespace autolinkHeadings {
      *
      * @default { type: 'element', tagName: 'span', properties: {className: ['icon', 'icon-link']}, children: [] }
      */
-    content?: Node | ((heading: Node) => Node[])
+    content?: Node | ((heading: Element) => Node[])
 
     /**
      * `hast` node to wrap the heading and link with, if `behavior` is
      * `'before'` or `'after'`. There is no default.
      */
-    group?: Node | ((heading: Node) => Node)
+    group?: Node | ((heading: Element) => Node)
   }
 }
 
