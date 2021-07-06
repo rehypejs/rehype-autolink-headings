@@ -15,8 +15,10 @@
 [npm][]:
 
 ```sh
-npm install rehype-autolink-headings
+npm install rehype-autolink-headings rehype-slug
 ```
+
+> **This package will not work without `rehype-slug`. More information under [API](#user-content-api).**
 
 ## Use
 
