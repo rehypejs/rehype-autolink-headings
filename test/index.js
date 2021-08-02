@@ -1,3 +1,7 @@
+/**
+ * @typedef {import('../index.js').Options} Options
+ */
+
 import fs from 'fs'
 import path from 'path'
 import {bail} from 'bail'
@@ -13,25 +17,32 @@ test('rehypeAutolinkHeadings', (t) => {
   t.test('fixtures', (t) => {
     fs.readdir(root, (error, files) => {
       bail(error)
-      files = files.filter((d) => !isHidden(d))
 
-      t.plan(files.length)
+      const visible = files.filter((d) => !isHidden(d))
+
+      t.plan(visible.length)
 
       let index = -1
 
-      while (++index < files.length) {
-        one(files[index])
+      while (++index < visible.length) {
+        one(visible[index])
       }
     })
 
+    /**
+     * @param {string} fixture
+     */
     function one(fixture) {
       const base = path.join(root, fixture)
       const input = readSync(path.join(base, 'input.html'))
       const output = readSync(path.join(base, 'output.html'))
+      /** @type {Options|undefined} */
       let config
 
       try {
-        config = JSON.parse(fs.readFileSync(path.join(base, 'config.json')))
+        config = JSON.parse(
+          String(fs.readFileSync(path.join(base, 'config.json')))
+        )
       } catch {}
 
       t.test(fixture, (t) => {
@@ -56,17 +67,25 @@ test('rehypeAutolinkHeadings', (t) => {
       .use(rehypeAutolinkHeadings, {
         behavior: 'after',
         group: (node) => {
-          t.equal(node.properties.id, 'a', 'should pass `node` to `group`')
+          t.equal(
+            node.properties && node.properties.id,
+            'a',
+            'should pass `node` to `group`'
+          )
           return {type: 'element', tagName: 'div', properties: {}, children: []}
         },
         content: (node) => {
-          t.equal(node.properties.id, 'a', 'should pass `node` to `content`')
+          t.equal(
+            node.properties && node.properties.id,
+            'a',
+            'should pass `node` to `content`'
+          )
           return {type: 'element', tagName: 'i', properties: {}, children: []}
         }
       })
       .process('<h1 id=a>b</h1>', (error, file) => {
         t.deepEqual(
-          [error, file.messages.length, String(file)],
+          [error, (file || {messages: []}).messages.length, String(file)],
           [null, 0, '<div><h1 id="a">b</h1><a href="#a"><i></i></a></div>']
         )
       })
