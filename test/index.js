@@ -2,8 +2,8 @@
  * @typedef {import('../index.js').Options} Options
  */
 
-import fs from 'fs'
-import path from 'path'
+import fs from 'node:fs'
+import path from 'node:path'
 import {bail} from 'bail'
 import test from 'tape'
 import {rehype} from 'rehype'
