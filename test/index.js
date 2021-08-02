@@ -1,20 +1,19 @@
 import fs from 'fs'
 import path from 'path'
-import bail from 'bail'
+import {bail} from 'bail'
 import test from 'tape'
-import rehype from 'rehype'
-import vfile from 'to-vfile'
-import negate from 'negate'
-import hidden from 'is-hidden'
-import autolink from '../index.js'
+import {rehype} from 'rehype'
+import {readSync} from 'to-vfile'
+import {isHidden} from 'is-hidden'
+import rehypeAutolinkHeadings from '../index.js'
 
-test('rehype-autolink-headings', function (t) {
+test('rehypeAutolinkHeadings', function (t) {
   var root = path.join('test', 'fixtures')
 
   t.test('fixtures', function (t) {
     fs.readdir(root, function (error, files) {
       bail(error)
-      files = files.filter(negate(hidden))
+      files = files.filter((d) => !isHidden(d))
 
       t.plan(files.length)
 
@@ -27,8 +26,8 @@ test('rehype-autolink-headings', function (t) {
 
     function one(fixture) {
       var base = path.join(root, fixture)
-      var input = vfile.readSync(path.join(base, 'input.html'))
-      var output = vfile.readSync(path.join(base, 'output.html'))
+      var input = readSync(path.join(base, 'input.html'))
+      var output = readSync(path.join(base, 'output.html'))
       var config
 
       try {
@@ -38,7 +37,7 @@ test('rehype-autolink-headings', function (t) {
       t.test(fixture, function (t) {
         rehype()
           .data('settings', {fragment: true})
-          .use(autolink, config)
+          .use(rehypeAutolinkHeadings, config)
           .process(input, function (error) {
             t.plan(3)
             t.ifErr(error, 'shouldn’t throw')
@@ -54,7 +53,7 @@ test('rehype-autolink-headings', function (t) {
 
     rehype()
       .data('settings', {fragment: true})
-      .use(autolink, {
+      .use(rehypeAutolinkHeadings, {
         behavior: 'after',
         group: (node) => {
           t.equal(node.properties.id, 'a', 'should pass `node` to `group`')
