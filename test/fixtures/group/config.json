@@ -4,9 +4,7 @@
     "type": "element",
     "tagName": "div",
     "properties": {
-      "className": [
-        "heading-group"
-      ]
+      "className": ["heading-group"]
     }
   }
 }

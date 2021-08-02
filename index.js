@@ -3,22 +3,19 @@ import {hasProperty} from 'hast-util-has-property'
 import {headingRank} from 'hast-util-heading-rank'
 import {visit} from 'unist-util-visit'
 
-var splice = [].splice
-
-var contentDefaults = {
+const contentDefaults = {
   type: 'element',
   tagName: 'span',
   properties: {className: ['icon', 'icon-link']},
   children: []
 }
 
-export default function rehypeAutolinkHeadings(options) {
-  var settings = options || {}
-  var props = settings.properties
-  var behavior = settings.behaviour || settings.behavior || 'prepend'
-  var content = settings.content || contentDefaults
-  var group = settings.group
-  var method
+export default function rehypeAutolinkHeadings(options = {}) {
+  let props = options.properties
+  const behavior = options.behaviour || options.behavior || 'prepend'
+  const content = options.content || contentDefaults
+  const group = options.group
+  let method
 
   if (behavior === 'wrap') {
     method = wrap
@@ -53,16 +50,20 @@ export default function rehypeAutolinkHeadings(options) {
   }
 
   function around(node, index, parent) {
-    var link = create(node, extend(true, {}, props), toChildren(content, node))
-    var nodes = behavior === 'before' ? [link, node] : [node, link]
-    var grouping = group && toNode(group, node)
+    const link = create(
+      node,
+      extend(true, {}, props),
+      toChildren(content, node)
+    )
+    let nodes = behavior === 'before' ? [link, node] : [node, link]
+    const grouping = group && toNode(group, node)
 
     if (grouping) {
       grouping.children = nodes
-      nodes = grouping
+      nodes = [grouping]
     }
 
-    splice.apply(parent.children, [index, 1].concat(nodes))
+    parent.children.splice(index, 1, ...nodes)
 
     return [visit.SKIP, index + nodes.length]
   }
@@ -74,7 +75,7 @@ export default function rehypeAutolinkHeadings(options) {
   }
 
   function toChildren(value, node) {
-    var result = toNode(value, node)
+    const result = toNode(value, node)
     return Array.isArray(result) ? result : [result]
   }
 

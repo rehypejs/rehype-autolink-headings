@@ -7,17 +7,17 @@ import {readSync} from 'to-vfile'
 import {isHidden} from 'is-hidden'
 import rehypeAutolinkHeadings from '../index.js'
 
-test('rehypeAutolinkHeadings', function (t) {
-  var root = path.join('test', 'fixtures')
+test('rehypeAutolinkHeadings', (t) => {
+  const root = path.join('test', 'fixtures')
 
-  t.test('fixtures', function (t) {
-    fs.readdir(root, function (error, files) {
+  t.test('fixtures', (t) => {
+    fs.readdir(root, (error, files) => {
       bail(error)
       files = files.filter((d) => !isHidden(d))
 
       t.plan(files.length)
 
-      var index = -1
+      let index = -1
 
       while (++index < files.length) {
         one(files[index])
@@ -25,20 +25,20 @@ test('rehypeAutolinkHeadings', function (t) {
     })
 
     function one(fixture) {
-      var base = path.join(root, fixture)
-      var input = readSync(path.join(base, 'input.html'))
-      var output = readSync(path.join(base, 'output.html'))
-      var config
+      const base = path.join(root, fixture)
+      const input = readSync(path.join(base, 'input.html'))
+      const output = readSync(path.join(base, 'output.html'))
+      let config
 
       try {
         config = JSON.parse(fs.readFileSync(path.join(base, 'config.json')))
-      } catch (_) {}
+      } catch {}
 
-      t.test(fixture, function (t) {
+      t.test(fixture, (t) => {
         rehype()
           .data('settings', {fragment: true})
           .use(rehypeAutolinkHeadings, config)
-          .process(input, function (error) {
+          .process(input, (error) => {
             t.plan(3)
             t.ifErr(error, 'shouldn’t throw')
             t.equal(input.messages.length, 0, 'shouldn’t warn')
@@ -48,7 +48,7 @@ test('rehypeAutolinkHeadings', function (t) {
     }
   })
 
-  t.test('functions', function (t) {
+  t.test('functions', (t) => {
     t.plan(3)
 
     rehype()
@@ -64,7 +64,7 @@ test('rehypeAutolinkHeadings', function (t) {
           return {type: 'element', tagName: 'i', properties: {}, children: []}
         }
       })
-      .process('<h1 id=a>b</h1>', function (error, file) {
+      .process('<h1 id=a>b</h1>', (error, file) => {
         t.deepEqual(
           [error, file.messages.length, String(file)],
           [null, 0, '<div><h1 id="a">b</h1><a href="#a"><i></i></a></div>']
