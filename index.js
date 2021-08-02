@@ -1,7 +1,7 @@
 import extend from 'extend'
-import has from 'hast-util-has-property'
-import rank from 'hast-util-heading-rank'
-import visit from 'unist-util-visit'
+import {hasProperty} from 'hast-util-has-property'
+import {headingRank} from 'hast-util-heading-rank'
+import {visit} from 'unist-util-visit'
 
 var splice = [].splice
 
@@ -39,7 +39,7 @@ export default function rehypeAutolinkHeadings(options) {
   }
 
   function visitor(node, index, parent) {
-    if (rank(node) && has(node, 'id')) {
+    if (headingRank(node) && hasProperty(node, 'id')) {
       return method(node, index, parent)
     }
   }
