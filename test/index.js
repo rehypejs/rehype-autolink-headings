@@ -1,17 +1,15 @@
-'use strict'
-
-var fs = require('fs')
-var path = require('path')
-var bail = require('bail')
-var test = require('tape')
-var rehype = require('rehype')
-var vfile = require('to-vfile')
-var negate = require('negate')
-var hidden = require('is-hidden')
-var autolink = require('..')
+import fs from 'fs'
+import path from 'path'
+import bail from 'bail'
+import test from 'tape'
+import rehype from 'rehype'
+import vfile from 'to-vfile'
+import negate from 'negate'
+import hidden from 'is-hidden'
+import autolink from '../index.js'
 
 test('rehype-autolink-headings', function (t) {
-  var root = path.join(__dirname, 'fixtures')
+  var root = path.join('test', 'fixtures')
 
   t.test('fixtures', function (t) {
     fs.readdir(root, function (error, files) {

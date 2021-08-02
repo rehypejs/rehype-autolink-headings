@@ -1,11 +1,7 @@
-'use strict'
-
-var extend = require('extend')
-var has = require('hast-util-has-property')
-var rank = require('hast-util-heading-rank')
-var visit = require('unist-util-visit')
-
-module.exports = autolink
+import extend from 'extend'
+import has from 'hast-util-has-property'
+import rank from 'hast-util-heading-rank'
+import visit from 'unist-util-visit'
 
 var splice = [].splice
 
@@ -16,7 +12,7 @@ var contentDefaults = {
   children: []
 }
 
-function autolink(options) {
+export default function rehypeAutolinkHeadings(options) {
   var settings = options || {}
   var props = settings.properties
   var behavior = settings.behaviour || settings.behavior || 'prepend'
@@ -92,7 +88,7 @@ function autolink(options) {
       type: 'element',
       tagName: 'a',
       properties: Object.assign({}, props, {href: '#' + node.properties.id}),
-      children: children
+      children
     }
   }
 }
