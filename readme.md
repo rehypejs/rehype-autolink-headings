@@ -12,6 +12,9 @@
 
 ## Install
 
+This package is [ESM only](https://gist.github.com/sindresorhus/a39789f98801d908bbc7ff3ecc99d99c):
+Node 12+ is needed to use it and it must be `import`ed instead of `require`d.
+
 [npm][]:
 
 ```sh
@@ -33,19 +36,19 @@ Say we have the following file, `fragment.html`:
 And our script, `example.js`, looks as follows:
 
 ```js
-var fs = require('fs')
-var rehype = require('rehype')
-var slug = require('rehype-slug')
-var link = require('rehype-autolink-headings')
+import fs from 'node:fs'
+import rehype from 'rehype'
+import rehypeSlug from 'rehype-slug'
+import rehypeAutolinkHeadings from 'rehype-autolink-headings'
 
-var doc = fs.readFileSync('fragment.html')
+const buf = fs.readFileSync('fragment.html')
 
 rehype()
   .data('settings', {fragment: true})
-  .use(slug)
-  .use(link)
-  .process(doc, function(err, file) {
-    if (err) throw err
+  .use(rehypeSlug)
+  .use(rehypeAutolinkHeadings)
+  .process(buf)
+  .then((file) => {
     console.log(String(file))
   })
 ```
@@ -62,7 +65,10 @@ Now, running `node example` yields:
 
 ## API
 
-### `rehype().use(link[, options])`
+This package exports no identifiers.
+The default export is `rehypeAutolinkHeadings`.
+
+### `unified().use(rehypeAutolinkHeadings[, options])`
 
 Add links to headings (h1-h6) with an `id`.
 
