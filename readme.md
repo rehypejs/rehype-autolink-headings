@@ -8,7 +8,8 @@
 [![Backers][backers-badge]][collective]
 [![Chat][chat-badge]][chat]
 
-[**rehype**][rehype] plugin to automatically add links to headings (h1-h6).
+[**rehype**][rehype] plugin to automatically add links to headings (h1-h6) that
+already have an ID.
 
 ## Install
 
@@ -72,8 +73,8 @@ The default export is `rehypeAutolinkHeadings`.
 
 Add links to headings (h1-h6) with an `id`.
 
-> **Note**: this plugin expects `id`s to already exist on headings.
-> One way to add those automatically, is [`rehype-slug`][slug] (see example).
+**Note**: this plugin expects `id`s to already exist on headings.
+One way to add those automatically is [`rehype-slug`][slug] (see example).
 
 ##### `options`
 
