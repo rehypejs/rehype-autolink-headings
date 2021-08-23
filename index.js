@@ -4,6 +4,7 @@
  * @typedef {import('hast').Element} Element
  * @typedef {Element['children'][number]} ElementChild
  * @typedef {import('hast').Properties} Properties
+ * @typedef {import('hast-util-is-element').Test} Test
  *
  * @typedef {'prepend'|'append'|'wrap'|'before'|'after'} Behavior
  *
@@ -27,11 +28,17 @@
  *   hast node to wrap the heading and link with, if `behavior` is `'before'` or
  *   `'after'`.
  *   There is no default.
+ * @property {Test} [test]
+ *   Test to define which heading elements are linked.
+ *   Any test that can be given to `hast-util-is-element` is supported.
+ *   The default (no test) is to link all headings.
+ *   Can be used to link only h1-h3, or for example all except h1.
  */
 
 import extend from 'extend'
 import {hasProperty} from 'hast-util-has-property'
 import {headingRank} from 'hast-util-heading-rank'
+import {convertElement} from 'hast-util-is-element'
 import {visit, SKIP} from 'unist-util-visit'
 
 /** @type {Element} */
@@ -52,6 +59,7 @@ export default function rehypeAutolinkHeadings(options = {}) {
   const behavior = options.behaviour || options.behavior || 'prepend'
   const content = options.content || contentDefaults
   const group = options.group
+  const is = convertElement(options.test)
 
   /** @type {import('unist-util-visit').Visitor<Element>} */
   let method
@@ -70,7 +78,11 @@ export default function rehypeAutolinkHeadings(options = {}) {
 
   return (tree) => {
     visit(tree, 'element', (node, index, parent) => {
-      if (headingRank(node) && hasProperty(node, 'id')) {
+      if (
+        headingRank(node) &&
+        hasProperty(node, 'id') &&
+        is(node, index, parent)
+      ) {
         return method(node, index, parent)
       }
     })

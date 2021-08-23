@@ -117,8 +117,8 @@ If `content` is a function, it’s called with the current heading (`Element`) a
 should return one or more nodes:
 
 ```js
-var toString = require('hast-util-to-string')
-var h = require('hastscript')
+import {toString} from 'hast-util-to-string'
+import {h} from 'hastscript'
 
 // …
 
@@ -142,7 +142,7 @@ If `group` is a function, it’s called with the current heading (`Element`) and
 should return a hast node.
 
 ```js
-var h = require('hastscript')
+import {h} from 'hastscript'
 
 // …
 
@@ -150,6 +150,17 @@ function group(node) {
   return h('.heading-' + node.charAt(1) + '-group')
 }
 ```
+
+###### `options.test`
+
+Test to define which heading elements are linked.
+Any test that can be given to [`hast-util-is-element`][is] is supported.
+The default (no test) is to link all headings.
+
+Can be used to link only `<h1>` through `<h3>` (with `['h1', 'h2', 'h3']`), or
+for example all except `<h1>` (with `['h2', 'h3', 'h4', 'h5', 'h6']`).
+
+Functions can also be given to do more complex things!
 
 ## Security
 
@@ -233,3 +244,5 @@ abide by its terms.
 [sanitize]: https://github.com/rehypejs/rehype-sanitize
 
 [slug]: https://github.com/rehypejs/rehype-slug
+
+[is]: https://github.com/syntax-tree/hast-util-is-element
