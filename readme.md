@@ -68,17 +68,17 @@ In Node.js (version 12.20+, 14.14+, or 16.0+), install with [npm][]:
 npm install rehype-autolink-headings
 ```
 
-In Deno with [Skypack][]:
+In Deno with [`esm.sh`][esmsh]:
 
 ```js
-import rehypeAutolinkHeadings from 'https://cdn.skypack.dev/rehype-autolink-headings@6?dts'
+import rehypeAutolinkHeadings from 'https://esm.sh/rehype-autolink-headings@6'
 ```
 
-In browsers with [Skypack][]:
+In browsers with [`esm.sh`][esmsh]:
 
 ```html
 <script type="module">
-  import rehypeAutolinkHeadings from 'https://cdn.skypack.dev/rehype-autolink-headings@6?min'
+  import rehypeAutolinkHeadings from 'https://esm.sh/rehype-autolink-headings@6?bundle'
 </script>
 ```
 
@@ -382,7 +382,7 @@ abide by its terms.
 
 [npm]: https://docs.npmjs.com/cli/install
 
-[skypack]: https://www.skypack.dev
+[esmsh]: https://esm.sh
 
 [health]: https://github.com/rehypejs/.github
 
