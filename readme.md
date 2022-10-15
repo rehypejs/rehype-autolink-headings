@@ -188,9 +188,11 @@ should return a hast node.
 
 ###### `options.linkPrefix`
 
-String to add as a prefix to the generated link. Defaults to ''.
+String to add as a prefix to the generated link. Defaults to `''`.
 
-This can be used if you want to convert your relative anchor links (`#my-anchor`) into absolute anchor links (`/some/path#my-anchor`), e.g. when you're using a `<base>` tag on your site.
+This can be used if you want to convert your relative anchor links (`#my-anchor`)
+into absolute anchor links (`/some/path#my-anchor`), e.g. when you’re using a
+`<base>` tag on your site.
 
 
 ###### `options.test`
