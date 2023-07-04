@@ -20,7 +20,8 @@
     *   [`unified().use(rehypeAutolinkHeadings[, options])`](#unifieduserehypeautolinkheadings-options)
 *   [Examples](#examples)
     *   [Example: different behaviors](#example-different-behaviors)
-    *   [Example: content](#example-content)
+    *   [Example: content from `h` builder](#example-content-from-h-builder)
+    *   [Example: content from `fromHtml` builder](#example-content-from-fromhtml-builder)
     *   [Example: group](#example-group)
 *   [Types](#types)
 *   [Compatibility](#compatibility)
@@ -173,6 +174,8 @@ By default, a `<span class="icon icon-link"></span>` is used.
 When a function is given, it’s called with the current heading (`Element`) and
 should return one or more nodes.
 
+The hast can be hand-written from scratch, built using the `h` builder from [`hastscript`](https://www.npmjs.com/package/hastscript), or compiled from a string using the `fromHtml` builder from [`hast-util-from-html`](https://www.npmjs.com/package/hast-util-from-html).
+
 > 👉 **Note**: this option is ignored when the behavior is `wrap`.
 
 ###### `options.group`
@@ -236,7 +239,7 @@ Yields:
 <h1 id="after">after</h1><a href="#after"><span class="icon icon-link"></span></a>
 ```
 
-### Example: content
+### Example: content from `h` builder
 
 The following example passes `content` as a function, to generate an accessible
 description of each link.
@@ -270,6 +273,39 @@ Yields:
 
 ```html
 <h1 id="xxx"><a aria-hidden="true" tabindex="-1" href="#xxx"><span class="visually-hidden">Read the “xxx” section</span><span class="icon icon-link" aria-hidden="true"></span></a>xxx</h1>
+```
+
+### Example: content from `fromHtml` builder
+
+The following example passes `content` as a function, to generate an accessible
+description of each link.
+
+```js
+import {rehype} from 'rehype'
+import rehypeAutolinkHeadings from 'rehype-autolink-headings'
+import {fromHtml} from "hast-util-from-html"
+
+main()
+
+async function main() {
+  const file = await rehype()
+    .data('settings', {fragment: true})
+    .use(rehypeAutolinkHeadings, {
+      content: fromHtml(
+        `<svg height="10" width="10"><circle cx="5" cy="5" r="5" fill="black" /></svg>`,
+        {space: "svg", fragment: true}
+      ),
+    })
+    .process('<h1 id="xxx">xxx</h1>')
+
+  console.log(String(file))
+}
+```
+
+Yields:
+
+```html
+<h1 id="xxx"><a aria-hidden="true" tabindex="-1" href="#xxx"><span class="icon icon-link" aria-hidden="true"><svg height="10" width="10"><circle cx="5" cy="5" r="5" fill="black"></circle></svg></span></a>xxx</h1>
 ```
 
 ### Example: group
