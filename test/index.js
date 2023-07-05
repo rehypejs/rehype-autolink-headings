@@ -66,7 +66,7 @@ test('rehypeAutolinkHeadings', (t) => {
       .data('settings', {fragment: true})
       .use(rehypeAutolinkHeadings, {
         behavior: 'after',
-        group: (node) => {
+        group(node) {
           t.equal(
             node.properties && node.properties.id,
             'a',
@@ -74,7 +74,7 @@ test('rehypeAutolinkHeadings', (t) => {
           )
           return {type: 'element', tagName: 'div', properties: {}, children: []}
         },
-        content: (node) => {
+        content(node) {
           t.equal(
             node.properties && node.properties.id,
             'a',
