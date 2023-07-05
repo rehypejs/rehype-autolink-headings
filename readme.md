@@ -20,7 +20,8 @@
     *   [`unified().use(rehypeAutolinkHeadings[, options])`](#unifieduserehypeautolinkheadings-options)
 *   [Examples](#examples)
     *   [Example: different behaviors](#example-different-behaviors)
-    *   [Example: content](#example-content)
+    *   [Example: content from `h` builder](#example-content-from-h-builder)
+    *   [Example: content from `fromHtml` builder](#example-content-from-fromhtml-builder)
     *   [Example: group](#example-group)
 *   [Types](#types)
 *   [Compatibility](#compatibility)
@@ -236,7 +237,7 @@ Yields:
 <h1 id="after">after</h1><a href="#after"><span class="icon icon-link"></span></a>
 ```
 
-### Example: content
+### Example: content from `h` builder
 
 The following example passes `content` as a function, to generate an accessible
 description of each link.
@@ -270,6 +271,39 @@ Yields:
 
 ```html
 <h1 id="xxx"><a aria-hidden="true" tabindex="-1" href="#xxx"><span class="visually-hidden">Read the “xxx” section</span><span class="icon icon-link" aria-hidden="true"></span></a>xxx</h1>
+```
+
+### Example: content from `fromHtml` builder
+
+The following example passes `content` as a function, to generate an accessible
+description of each link.
+
+```js
+import {rehype} from 'rehype'
+import rehypeAutolinkHeadings from 'rehype-autolink-headings'
+import {fromHtmlIsomorphic} from 'hast-util-from-html-isomorphic'
+
+main()
+
+async function main() {
+  const file = await rehype()
+    .data('settings', {fragment: true})
+    .use(rehypeAutolinkHeadings, {
+      content: fromHtmlIsomorphic(
+        '<svg height="10" width="10"><circle cx="5" cy="5" r="5" fill="black" /></svg>',
+        {fragment: true}
+      ).children
+    })
+    .process('<h1 id="xxx">xxx</h1>')
+
+  console.log(String(file))
+}
+```
+
+Yields:
+
+```html
+<h1 id="xxx"><a aria-hidden="true" tabindex="-1" href="#xxx"><span class="icon icon-link" aria-hidden="true"><svg height="10" width="10"><circle cx="5" cy="5" r="5" fill="black"></circle></svg></span></a>xxx</h1>
 ```
 
 ### Example: group
