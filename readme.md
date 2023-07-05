@@ -281,7 +281,7 @@ description of each link.
 ```js
 import {rehype} from 'rehype'
 import rehypeAutolinkHeadings from 'rehype-autolink-headings'
-import {fromHtml} from "hast-util-from-html"
+import {fromHtmlIsomorphic} from 'hast-util-from-html-isomorphic'
 
 main()
 
