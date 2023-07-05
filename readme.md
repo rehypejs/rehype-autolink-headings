@@ -174,8 +174,6 @@ By default, a `<span class="icon icon-link"></span>` is used.
 When a function is given, it’s called with the current heading (`Element`) and
 should return one or more nodes.
 
-The hast can be hand-written from scratch, built using the `h` builder from [`hastscript`](https://www.npmjs.com/package/hastscript), or compiled from a string using the `fromHtml` builder from [`hast-util-from-html`](https://www.npmjs.com/package/hast-util-from-html).
-
 > 👉 **Note**: this option is ignored when the behavior is `wrap`.
 
 ###### `options.group`
