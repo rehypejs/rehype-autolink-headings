@@ -289,10 +289,10 @@ async function main() {
   const file = await rehype()
     .data('settings', {fragment: true})
     .use(rehypeAutolinkHeadings, {
-      content: fromHtml(
-        `<svg height="10" width="10"><circle cx="5" cy="5" r="5" fill="black" /></svg>`,
-        {space: "svg", fragment: true}
-      ),
+      content: fromHtmlIsomorphic(
+        '<svg height="10" width="10"><circle cx="5" cy="5" r="5" fill="black" /></svg>',
+        {fragment: true}
+      ).children
     })
     .process('<h1 id="xxx">xxx</h1>')
 
