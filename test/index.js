@@ -29,13 +29,17 @@ test('rehypeAutolinkHeadings', async function (t) {
         group(node) {
           assert.equal(node.properties.id, 'a')
           return {type: 'element', tagName: 'div', properties: {}, children: []}
+        },
+        properties(node) {
+          assert.equal(node.properties.id, 'a')
+          return {dataX: 'y'}
         }
       })
       .process('<h1 id=a>b</h1>')
 
     assert.deepEqual(
       String(file),
-      '<div><h1 id="a">b</h1><a href="#a"><i></i></a></div>'
+      '<div><h1 id="a">b</h1><a data-x="y" href="#a"><i></i></a></div>'
     )
   })
 })

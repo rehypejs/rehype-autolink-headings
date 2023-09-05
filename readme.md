@@ -20,6 +20,7 @@
     *   [`unified().use(rehypeAutolinkHeadings[, options])`](#unifieduserehypeautolinkheadings-options)
     *   [`Behavior`](#behavior)
     *   [`Build`](#build)
+    *   [`BuildProperties`](#buildproperties)
     *   [`Options`](#options)
 *   [Examples](#examples)
     *   [Example: different behaviors](#example-different-behaviors)
@@ -185,6 +186,19 @@ Generate content (TypeScript type).
 
 Content ([`Array<Node>`][hast-node] or `Node`).
 
+### `BuildProperties`
+
+Generate properties (TypeScript type).
+
+###### Parameters
+
+*   `element` ([`Element`][hast-element])
+    — current heading
+
+###### Returns
+
+Properties ([`Properties`][hast-properties]).
+
 ### `Options`
 
 Configuration (TypeScript type).
@@ -200,7 +214,8 @@ Configuration (TypeScript type).
     optional)
     — content to wrap the heading and link with, if `behavior` is `'after'` or
     `'before'`
-*   `properties` ([`Properties`][hast-properties], default:
+*   `properties` ([`BuildProperties`][api-build-properties] or
+    [`Properties`][hast-properties], default:
     `{ariaHidden: true, tabIndex: -1}` if `'append'` or `'prepend'`, otherwise
     `undefined`)
     — extra properties to set on the link when injecting
@@ -344,7 +359,11 @@ Yields:
 ## Types
 
 This package is fully typed with [TypeScript][].
-It exports the additional type [`Options`][api-options].
+It exports the additional types
+[`Behavior`][api-behavior],
+[`Build`][api-build],
+[`BuildProperties`][api-build-properties], and
+[`Options`][api-options].
 
 ## Compatibility
 
@@ -465,6 +484,8 @@ abide by its terms.
 [api-behavior]: #behavior
 
 [api-build]: #build
+
+[api-build-properties]: #buildproperties
 
 [api-options]: #options
 
