@@ -1,5 +1,5 @@
 /**
- * @typedef {import('../index.js').Options} Options
+ * @typedef {import('rehype-autolink-headings').Options} Options
  */
 
 import assert from 'node:assert/strict'
@@ -7,13 +7,14 @@ import fs from 'node:fs/promises'
 import test from 'node:test'
 import {isHidden} from 'is-hidden'
 import {rehype} from 'rehype'
-import rehypeAutolinkHeadings from '../index.js'
+import rehypeAutolinkHeadings from 'rehype-autolink-headings'
 
 test('rehypeAutolinkHeadings', async function (t) {
   await t.test('should expose the public api', async function () {
-    assert.deepEqual(Object.keys(await import('../index.js')).sort(), [
-      'default'
-    ])
+    assert.deepEqual(
+      Object.keys(await import('rehype-autolink-headings')).sort(),
+      ['default']
+    )
   })
 
   await t.test('should support functions', async function () {
