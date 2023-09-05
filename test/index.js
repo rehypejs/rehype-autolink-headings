@@ -5,23 +5,29 @@
 import assert from 'node:assert/strict'
 import fs from 'node:fs/promises'
 import test from 'node:test'
-import {rehype} from 'rehype'
 import {isHidden} from 'is-hidden'
+import {rehype} from 'rehype'
 import rehypeAutolinkHeadings from '../index.js'
 
 test('rehypeAutolinkHeadings', async function (t) {
+  await t.test('should expose the public api', async function () {
+    assert.deepEqual(Object.keys(await import('../index.js')).sort(), [
+      'default'
+    ])
+  })
+
   await t.test('should support functions', async function () {
     const file = await rehype()
       .data('settings', {fragment: true})
       .use(rehypeAutolinkHeadings, {
         behavior: 'after',
-        group(node) {
-          assert.equal(node.properties.id, 'a')
-          return {type: 'element', tagName: 'div', properties: {}, children: []}
-        },
         content(node) {
           assert.equal(node.properties.id, 'a')
           return {type: 'element', tagName: 'i', properties: {}, children: []}
+        },
+        group(node) {
+          assert.equal(node.properties.id, 'a')
+          return {type: 'element', tagName: 'div', properties: {}, children: []}
         }
       })
       .process('<h1 id=a>b</h1>')
