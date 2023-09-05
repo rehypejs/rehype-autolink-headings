@@ -76,14 +76,14 @@ npm install rehype-autolink-headings
 In Deno with [`esm.sh`][esmsh]:
 
 ```js
-import rehypeAutolinkHeadings from 'https://esm.sh/rehype-autolink-headings@6'
+import rehypeAutolinkHeadings from 'https://esm.sh/rehype-autolink-headings@7'
 ```
 
 In browsers with [`esm.sh`][esmsh]:
 
 ```html
 <script type="module">
-  import rehypeAutolinkHeadings from 'https://esm.sh/rehype-autolink-headings@6?bundle'
+  import rehypeAutolinkHeadings from 'https://esm.sh/rehype-autolink-headings@7?bundle'
 </script>
 ```
 
