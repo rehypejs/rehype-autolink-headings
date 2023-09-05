@@ -8,7 +8,7 @@
 [![Backers][backers-badge]][collective]
 [![Chat][chat-badge]][chat]
 
-**[rehype][]** plugin to add links to headings with `id`s back to themselves.
+**[rehype][]** plugin to add links from headings back to themselves.
 
 ## Contents
 
@@ -18,10 +18,13 @@
 *   [Use](#use)
 *   [API](#api)
     *   [`unified().use(rehypeAutolinkHeadings[, options])`](#unifieduserehypeautolinkheadings-options)
+    *   [`Behavior`](#behavior)
+    *   [`Build`](#build)
+    *   [`Options`](#options)
 *   [Examples](#examples)
     *   [Example: different behaviors](#example-different-behaviors)
-    *   [Example: content from `h` builder](#example-content-from-h-builder)
-    *   [Example: content from `fromHtml` builder](#example-content-from-fromhtml-builder)
+    *   [Example: building content with `hastscript`](#example-building-content-with-hastscript)
+    *   [Example: passing content from a string of HTML](#example-passing-content-from-a-string-of-html)
     *   [Example: group](#example-group)
 *   [Types](#types)
 *   [Compatibility](#compatibility)
@@ -34,7 +37,7 @@
 
 This package is a [unified][] ([rehype][]) plugin to add links from headings
 back to themselves.
-It looks for headings (so `<h1>` through `<h6>`), that have `id` attributes,
+It looks for headings (so `<h1>` through `<h6>`) that have `id` properties,
 and injects a link to themselves.
 Similar functionality is applied by many places that render markdown.
 For example, when browsing this readme on GitHub or npm, an anchor is added
@@ -51,19 +54,19 @@ This is a rehype plugin that adds links to headings in the AST.
 
 This plugin is useful when you have relatively long documents, where you want
 users to be able to link to particular sections, and you already have `id`
-attributes set on all (or certain?) headings.
+properties set on all (or certain?) headings.
 
 A different plugin, [`rehype-slug`][rehype-slug], adds `id`s to headings.
-When a heading doesn’t already have an `id` attribute, it creates a slug from
-it, and adds that as the `id` attribute.
+When a heading doesn’t already have an `id` property, it creates a slug from
+it, and adds that as the `id` property.
 When using both plugins together, all headings (whether explicitly with a
 certain `id` or automatically with a generate one) will get a link back to
 themselves.
 
 ## Install
 
-This package is [ESM only](https://gist.github.com/sindresorhus/a39789f98801d908bbc7ff3ecc99d99c).
-In Node.js (version 12.20+, 14.14+, or 16.0+), install with [npm][]:
+This package is [ESM only][esm].
+In Node.js (version 16+), install with [npm][]:
 
 ```sh
 npm install rehype-autolink-headings
@@ -88,115 +91,121 @@ In browsers with [`esm.sh`][esmsh]:
 Say we have the following file `example.html`:
 
 ```html
-<h1 id=some-id>Lorem ipsum</h1>
-<h2>Dolor sit amet 😪</h2>
-<h3>consectetur &amp; adipisicing</h3>
-<h4>elit</h4>
-<h5>elit</h5>
+<h1>Solar System</h1>
+<h2>Formation and evolution</h2>
+<h2>Structure and composition</h2>
+<h3>Orbits</h3>
+<h3>Composition</h3>
+<h3>Distances and scales</h3>
+<h3>Interplanetary environment</h3>
+<p>…</p>
 ```
 
-And our module `example.js` looks as follows:
+…and our module `example.js` contains:
 
 ```js
-import {read} from 'to-vfile'
 import {rehype} from 'rehype'
-import rehypeSlug from 'rehype-slug'
 import rehypeAutolinkHeadings from 'rehype-autolink-headings'
+import rehypeSlug from 'rehype-slug'
+import {read} from 'to-vfile'
 
-main()
+const file = await rehype()
+  .data('settings', {fragment: true})
+  .use(rehypeSlug)
+  .use(rehypeAutolinkHeadings)
+  .process(await read('example.html'))
 
-async function main() {
-  const file = await rehype()
-    .data('settings', {fragment: true})
-    .use(rehypeSlug)
-    .use(rehypeAutolinkHeadings)
-    .process(await read('example.html'))
-
-  console.log(String(file))
-}
+console.log(String(file))
 ```
 
-Now, running `node example.js` yields:
+…then running `node example.js` yields:
 
 ```html
-<h1 id="some-id"><a aria-hidden="true" tabindex="-1" href="#some-id"><span class="icon icon-link"></span></a>Lorem ipsum</h1>
-<h2 id="dolor-sit-amet-"><a aria-hidden="true" tabindex="-1" href="#dolor-sit-amet-"><span class="icon icon-link"></span></a>Dolor sit amet 😪</h2>
-<h3 id="consectetur--adipisicing"><a aria-hidden="true" tabindex="-1" href="#consectetur--adipisicing"><span class="icon icon-link"></span></a>consectetur &#x26; adipisicing</h3>
-<h4 id="elit"><a aria-hidden="true" tabindex="-1" href="#elit"><span class="icon icon-link"></span></a>elit</h4>
-<h5 id="elit-1"><a aria-hidden="true" tabindex="-1" href="#elit-1"><span class="icon icon-link"></span></a>elit</h5>
+<h1 id="solar-system"><a aria-hidden="true" tabindex="-1" href="#solar-system"><span class="icon icon-link"></span></a>Solar System</h1>
+<h2 id="formation-and-evolution"><a aria-hidden="true" tabindex="-1" href="#formation-and-evolution"><span class="icon icon-link"></span></a>Formation and evolution</h2>
+<h2 id="structure-and-composition"><a aria-hidden="true" tabindex="-1" href="#structure-and-composition"><span class="icon icon-link"></span></a>Structure and composition</h2>
+<h3 id="orbits"><a aria-hidden="true" tabindex="-1" href="#orbits"><span class="icon icon-link"></span></a>Orbits</h3>
+<h3 id="composition"><a aria-hidden="true" tabindex="-1" href="#composition"><span class="icon icon-link"></span></a>Composition</h3>
+<h3 id="distances-and-scales"><a aria-hidden="true" tabindex="-1" href="#distances-and-scales"><span class="icon icon-link"></span></a>Distances and scales</h3>
+<h3 id="interplanetary-environment"><a aria-hidden="true" tabindex="-1" href="#interplanetary-environment"><span class="icon icon-link"></span></a>Interplanetary environment</h3>
+<p>…</p>
 ```
-
-> 👉 **Note**: observe that from the `<h2>` on, automatic `id`s are generated.
-> This is done by `rehype-slug`.
-> Without `rehype-slug`, those headings would not be linked.
 
 ## API
 
 This package exports no identifiers.
-The default export is `rehypeAutolinkHeadings`.
+The default export is [`rehypeAutolinkHeadings`][api-rehype-autolink-headings].
 
 ### `unified().use(rehypeAutolinkHeadings[, options])`
 
-Add links to headings with `id`s back to themselves.
+Add links from headings back to themselves.
 
-> 👉 **Note**: this plugin operates on headings that have `id` attributes.
-> You can use `rehype-slug` to automatically generate `id`s for headings.
+###### Parameters
 
-##### `options`
+*   `options` ([`Options`][api-options], optional)
+    — configuration
 
-Configuration (optional).
+###### Returns
 
-###### `options.behavior`
+Transform ([`Transformer`][unified-transformer]).
 
-How to create links (`string`, default: `'prepend'`).
+###### Notes
 
-*   `'prepend'` — inject link before the heading text
+This plugin only applies to headings with `id`s.
+Use `rehype-slug` to generate `id`s for headings that don’t have them.
+
+Several behaviors are supported:
+
+*   `'prepend'` (default) — inject link before the heading text
 *   `'append'` — inject link after the heading text
 *   `'wrap'` — wrap the whole heading text with the link
 *   `'before'` — insert link before the heading
 *   `'after'` — insert link after the heading
 
-> 👉 **Note**: `options.content` is ignored when the behavior is `wrap`,
-> `options.group` is ignored when the behavior is `prepend`, `append`, or
-> `wrap`.
+### `Behavior`
 
-###### `options.properties`
+Behavior (TypeScript type).
 
-Attributes to set on the link ([`Properties`][properties], optional).
-Defaults to `{ariaHidden: true, tabIndex: -1}` when in `'prepend'` or
-`'append'` mode, and `{}` otherwise.
+###### Type
 
-###### `options.content`
+```ts
+type Behavior = 'after' | 'append' | 'before' | 'prepend' | 'wrap'
+```
 
-**[hast][]** nodes to insert in the link (`Function|Node|Children`).
-By default, a `<span class="icon icon-link"></span>` is used.
+### `Build`
 
-When a function is given, it’s called with the current heading (`Element`) and
-should return one or more nodes.
+Generate content (TypeScript type).
 
-> 👉 **Note**: this option is ignored when the behavior is `wrap`.
+###### Parameters
 
-###### `options.group`
+*   `element` ([`Element`][hast-element])
+    — current heading
 
-**[hast][]** node to wrap the heading and link with (`Function|Node`, optional).
-There is no default.
+###### Returns
 
-When a function is given, it’s called with the current heading (`Element`) and
-should return a hast node.
+Content ([`Array<Node>`][hast-node] or `Node`).
 
-> 👉 **Note**: this option is ignored when the behavior is `prepend`, `append`,
-> or `wrap`
+### `Options`
 
-###### `options.test`
+Configuration (TypeScript type).
 
-Test to define which heading elements are linked.
-Any test that can be given to [`hast-util-is-element`][hast-util-is-element] is
-supported.
-The default (no test) is to link all headings with an `id` attribute.
+###### Fields
 
-Can be used to link only `<h1>` through `<h3>` (with `['h1', 'h2', 'h3']`), or
-for example all except `<h1>` (with `['h2', 'h3', 'h4', 'h5', 'h6']`).
-A function can be given to do more complex things.
+*   `behavior` ([`Behavior`][api-behavior], default: `'prepend'`)
+    — how to create links
+*   `content` ([`Array<Node>`][hast-node], `Node`, or [`Build`][api-build],
+    default: equivalent of `<span class="icon icon-link"></span>`)
+    — content to insert in the link, if `behavior` is not `'wrap'`
+*   `group` ([`Array<Node>`][hast-node], `Node`, or [`Build`][api-build],
+    optional)
+    — content to wrap the heading and link with, if `behavior` is `'after'` or
+    `'before'`
+*   `properties` ([`Properties`][hast-properties], default:
+    `{ariaHidden: true, tabIndex: -1}` if `'append'` or `'prepend'`, otherwise
+    `undefined`)
+    — extra properties to set on the link when injecting
+*   `test` ([`Test`][hast-util-is-element-test], optional)
+    — extra test for which headings are linked
 
 ## Examples
 
@@ -208,149 +217,144 @@ This example shows what each behavior generates by default.
 import {rehype} from 'rehype'
 import rehypeAutolinkHeadings from 'rehype-autolink-headings'
 
-main()
-
-async function main() {
-  const behaviors = ['prepend', 'append', 'wrap', 'before', 'after']
-  let index = -1
-  while (++index < behaviors.length) {
-    const behavior = behaviors[index]
-    console.log(
-      String(
-        await rehype()
-          .data('settings', {fragment: true})
-          .use(rehypeAutolinkHeadings, {behavior})
-          .process('<h1 id="' + behavior + '">' + behavior + '</h1>')
-      )
+const behaviors = ['after', 'append', 'before', 'prepend', 'wrap']
+let index = -1
+while (++index < behaviors.length) {
+  const behavior = behaviors[index]
+  console.log(
+    String(
+      await rehype()
+        .data('settings', {fragment: true})
+        .use(rehypeAutolinkHeadings, {behavior})
+        .process('<h1 id="' + behavior + '">' + behavior + '</h1>')
     )
-  }
+  )
 }
 ```
 
 Yields:
 
 ```html
-<h1 id="prepend"><a aria-hidden="true" tabindex="-1" href="#prepend"><span class="icon icon-link"></span></a>prepend</h1>
-<h1 id="append">append<a aria-hidden="true" tabindex="-1" href="#append"><span class="icon icon-link"></span></a></h1>
-<h1 id="wrap"><a href="#wrap">wrap</a></h1>
-<a href="#before"><span class="icon icon-link"></span></a><h1 id="before">before</h1>
 <h1 id="after">after</h1><a href="#after"><span class="icon icon-link"></span></a>
+<h1 id="append">append<a aria-hidden="true" tabindex="-1" href="#append"><span class="icon icon-link"></span></a></h1>
+<a href="#before"><span class="icon icon-link"></span></a><h1 id="before">before</h1>
+<h1 id="prepend"><a aria-hidden="true" tabindex="-1" href="#prepend"><span class="icon icon-link"></span></a>prepend</h1>
+<h1 id="wrap"><a href="#wrap">wrap</a></h1>
 ```
 
-### Example: content from `h` builder
+### Example: building content with `hastscript`
 
-The following example passes `content` as a function, to generate an accessible
-description of each link.
+The following example passes `options.content` as a function, to generate an
+accessible description specific to each link.
+It uses [`hastscript`][hastscript] to build nodes.
 
 ```js
+import {h} from 'hastscript'
+import {toString} from 'hast-util-to-string'
 import {rehype} from 'rehype'
 import rehypeAutolinkHeadings from 'rehype-autolink-headings'
-import {toString} from 'hast-util-to-string'
-import {h} from 'hastscript'
 
-main()
+const file = await rehype()
+  .data('settings', {fragment: true})
+  .use(rehypeAutolinkHeadings, {
+    content(node) {
+      return [
+        h('span.visually-hidden', 'Read the “', toString(node), '” section'),
+        h('span.icon.icon-link', {ariaHidden: 'true'})
+      ]
+    }
+  })
+  .process('<h1 id="pluto">Pluto</h1>')
 
-async function main() {
-  const file = await rehype()
-    .data('settings', {fragment: true})
-    .use(rehypeAutolinkHeadings, {
-      content(node) {
-        return [
-          h('span.visually-hidden', 'Read the “', toString(node), '” section'),
-          h('span.icon.icon-link', {ariaHidden: 'true'})
-        ]
-      }
-    })
-    .process('<h1 id="xxx">xxx</h1>')
-
-  console.log(String(file))
-}
+console.log(String(file))
 ```
 
 Yields:
 
 ```html
-<h1 id="xxx"><a aria-hidden="true" tabindex="-1" href="#xxx"><span class="visually-hidden">Read the “xxx” section</span><span class="icon icon-link" aria-hidden="true"></span></a>xxx</h1>
+<h1 id="pluto"><a aria-hidden="true" tabindex="-1" href="#pluto"><span class="visually-hidden">Read the “Pluto” section</span><span class="icon icon-link" aria-hidden="true"></span></a>Pluto</h1>
 ```
 
-### Example: content from `fromHtml` builder
+### Example: passing content from a string of HTML
 
-The following example passes `content` as a function, to generate an accessible
-description of each link.
+The following example passes `content` as nodes.
+It uses [`hast-util-from-html-isomorphic`][hast-util-from-html-isomorphic] to
+build nodes from a string of HTML.
 
 ```js
+/**
+ * @typedef {import('hast').ElementContent} ElementContent
+ */
+
+import {fromHtmlIsomorphic} from 'hast-util-from-html-isomorphic'
 import {rehype} from 'rehype'
 import rehypeAutolinkHeadings from 'rehype-autolink-headings'
-import {fromHtmlIsomorphic} from 'hast-util-from-html-isomorphic'
 
-main()
-
-async function main() {
-  const file = await rehype()
-    .data('settings', {fragment: true})
-    .use(rehypeAutolinkHeadings, {
-      content: fromHtmlIsomorphic(
+const file = await rehype()
+  .data('settings', {fragment: true})
+  .use(rehypeAutolinkHeadings, {
+    content: /** @type {Array<ElementContent>} */ (
+      fromHtmlIsomorphic(
         '<svg height="10" width="10"><circle cx="5" cy="5" r="5" fill="black" /></svg>',
         {fragment: true}
       ).children
-    })
-    .process('<h1 id="xxx">xxx</h1>')
+    )
+  })
+  .process('<h1 id="makemake">Makemake</h1>')
 
-  console.log(String(file))
-}
+console.log(String(file))
 ```
 
 Yields:
 
 ```html
-<h1 id="xxx"><a aria-hidden="true" tabindex="-1" href="#xxx"><span class="icon icon-link" aria-hidden="true"><svg height="10" width="10"><circle cx="5" cy="5" r="5" fill="black"></circle></svg></span></a>xxx</h1>
+<h1 id="makemake"><a aria-hidden="true" tabindex="-1" href="#makemake"><svg height="10" width="10"><circle cx="5" cy="5" r="5" fill="black"></circle></svg></a>Makemake</h1>
 ```
 
 ### Example: group
 
 The following example passes `group` as a function, to dynamically generate a
 differing element that wraps the heading.
+It uses [`hastscript`][hastscript] to build nodes.
 
 ```js
+import {h} from 'hastscript'
 import {rehype} from 'rehype'
 import rehypeAutolinkHeadings from 'rehype-autolink-headings'
-import {h} from 'hastscript'
 
-main()
+const file = await rehype()
+  .data('settings', {fragment: true})
+  .use(rehypeAutolinkHeadings, {
+    behavior: 'before',
+    group(node) {
+      return h('.heading-' + node.tagName.charAt(1) + '-group')
+    }
+  })
+  .process('<h1 id="ceres">Ceres</h1>')
 
-async function main() {
-  const file = await rehype()
-    .data('settings', {fragment: true})
-    .use(rehypeAutolinkHeadings, {
-      behavior: 'before',
-      group(node) {
-        return h('.heading-' + node.tagName.charAt(1) + '-group')
-      }
-    })
-    .process('<h1 id="xxx">xxx</h1>')
-
-  console.log(String(file))
-}
+console.log(String(file))
 ```
 
 Yields:
 
 ```html
-<div class="heading-1-group"><a href="#xxx"><span class="icon icon-link"></span></a><h1 id="xxx">xxx</h1></div>
+<div class="heading-1-group"><a href="#ceres"><span class="icon icon-link"></span></a><h1 id="ceres">Ceres</h1></div>
 ```
 
 ## Types
 
 This package is fully typed with [TypeScript][].
-It exports an `Options` type, which specifies the interface of the accepted
-options.
+It exports the additional type [`Options`][api-options].
 
 ## Compatibility
 
-Projects maintained by the unified collective are compatible with all maintained
+Projects maintained by the unified collective are compatible with maintained
 versions of Node.js.
-As of now, that is Node.js 12.20+, 14.14+, and 16.0+.
-Our projects sometimes work with older versions, but this is not guaranteed.
+
+When we cut a new major release, we drop support for unmaintained versions of
+Node.
+This means we try to keep the current release line,
+`rehype-autolink-headings@^6`, compatible with Node.js 12.
 
 This plugin works with `rehype-parse` version 1+, `rehype-stringify` version 1+,
 `rehype` version 1+, and `unified` version 4+.
@@ -359,7 +363,7 @@ This plugin works with `rehype-parse` version 1+, `rehype-stringify` version 1+,
 
 Use of `rehype-autolink-headings` can open you up to a
 [cross-site scripting (XSS)][xss] attack if you pass user provided content in
-`properties` or `content`.
+`content`, `group`, or `properties`.
 
 Always be wary of user input and use [`rehype-sanitize`][rehype-sanitize].
 
@@ -400,9 +404,9 @@ abide by its terms.
 
 [downloads]: https://www.npmjs.com/package/rehype-autolink-headings
 
-[size-badge]: https://img.shields.io/bundlephobia/minzip/rehype-autolink-headings.svg
+[size-badge]: https://img.shields.io/bundlejs/size/rehype-autolink-headings
 
-[size]: https://bundlephobia.com/result?p=rehype-autolink-headings
+[size]: https://bundlejs.com/?q=rehype-autolink-headings
 
 [sponsors-badge]: https://opencollective.com/unified/sponsors/badge.svg
 
@@ -416,34 +420,52 @@ abide by its terms.
 
 [npm]: https://docs.npmjs.com/cli/install
 
+[esm]: https://gist.github.com/sindresorhus/a39789f98801d908bbc7ff3ecc99d99c
+
 [esmsh]: https://esm.sh
 
 [health]: https://github.com/rehypejs/.github
 
-[contributing]: https://github.com/rehypejs/.github/blob/HEAD/contributing.md
+[contributing]: https://github.com/rehypejs/.github/blob/main/contributing.md
 
-[support]: https://github.com/rehypejs/.github/blob/HEAD/support.md
+[support]: https://github.com/rehypejs/.github/blob/main/support.md
 
-[coc]: https://github.com/rehypejs/.github/blob/HEAD/code-of-conduct.md
+[coc]: https://github.com/rehypejs/.github/blob/main/code-of-conduct.md
 
 [license]: license
 
 [author]: https://wooorm.com
 
+[hast-element]: https://github.com/syntax-tree/hast#element
+
+[hast-node]: https://github.com/syntax-tree/hast#nodes
+
+[hast-util-is-element-test]: https://github.com/syntax-tree/hast-util-is-element#test
+
+[hast-properties]: https://github.com/syntax-tree/hast#properties
+
+[hastscript]: https://github.com/syntax-tree/hastscript
+
+[hast-util-from-html-isomorphic]: https://github.com/syntax-tree/hast-util-from-html-isomorphic
+
+[rehype]: https://github.com/rehypejs/rehype
+
+[rehype-sanitize]: https://github.com/rehypejs/rehype-sanitize
+
 [typescript]: https://www.typescriptlang.org
 
 [unified]: https://github.com/unifiedjs/unified
 
-[rehype]: https://github.com/rehypejs/rehype
-
-[hast]: https://github.com/syntax-tree/hast
+[unified-transformer]: https://github.com/unifiedjs/unified#transformer
 
 [xss]: https://en.wikipedia.org/wiki/Cross-site_scripting
 
-[rehype-sanitize]: https://github.com/rehypejs/rehype-sanitize
-
 [rehype-slug]: https://github.com/rehypejs/rehype-slug
 
-[hast-util-is-element]: https://github.com/syntax-tree/hast-util-is-element
+[api-behavior]: #behavior
 
-[properties]: https://github.com/syntax-tree/hast#properties
+[api-build]: #build
+
+[api-options]: #options
+
+[api-rehype-autolink-headings]: #unifieduserehypeautolinkheadings-options
