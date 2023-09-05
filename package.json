@@ -33,16 +33,15 @@
   ],
   "dependencies": {
     "@types/hast": "^3.0.0",
-    "extend": "^3.0.0",
-    "hast-util-has-property": "^3.0.0",
+    "@ungap/structured-clone": "^1.0.0",
     "hast-util-heading-rank": "^3.0.0",
     "hast-util-is-element": "^3.0.0",
     "unified": "^11.0.0",
     "unist-util-visit": "^5.0.0"
   },
   "devDependencies": {
-    "@types/extend": "^3.0.0",
     "@types/node": "^20.0.0",
+    "@types/ungap__structured-clone": "^0.3.0",
     "c8": "^8.0.0",
     "is-hidden": "^2.0.0",
     "prettier": "^3.0.0",
