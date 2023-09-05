@@ -86,7 +86,7 @@ test('rehypeAutolinkHeadings', (t) => {
       .process('<h1 id=a>b</h1>', (error, file) => {
         t.deepEqual(
           [error, (file || {messages: []}).messages.length, String(file)],
-          [null, 0, '<div><h1 id="a">b</h1><a href="#a"><i></i></a></div>']
+          [undefined, 0, '<div><h1 id="a">b</h1><a href="#a"><i></i></a></div>']
         )
       })
   })
