@@ -1,0 +1,17 @@
+{
+  "behavior": "substitute",
+  "content": [
+    {
+      "type": "text",
+      "value": "Bar"
+    },
+    {
+      "type": "element",
+      "tagName": "span",
+      "properties": {
+        "class": "icon icon-link",
+        "aria-hidden": "true"
+      }
+    }
+  ]
+}

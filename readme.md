@@ -27,6 +27,7 @@
     *   [Example: building content with `hastscript`](#example-building-content-with-hastscript)
     *   [Example: passing content from a string of HTML](#example-passing-content-from-a-string-of-html)
     *   [Example: group](#example-group)
+    *   [Example: behavior substitute](#example-behavior-substitute)
 *   [Types](#types)
 *   [Compatibility](#compatibility)
 *   [Security](#security)
@@ -162,6 +163,7 @@ Several behaviors are supported:
 *   `'wrap'` — wrap the whole heading text with the link
 *   `'before'` — insert link before the heading
 *   `'after'` — insert link after the heading
+*   `'substitute'` — wrap the `content` with the link
 
 ### `Behavior`
 
@@ -170,7 +172,7 @@ Behavior (TypeScript type).
 ###### Type
 
 ```ts
-type Behavior = 'after' | 'append' | 'before' | 'prepend' | 'wrap'
+type Behavior = 'after' | 'append' | 'before' | 'prepend' | 'wrap' | 'substitute'
 ```
 
 ### `Build`
@@ -354,6 +356,41 @@ Yields:
 
 ```html
 <div class="heading-1-group"><a href="#ceres"><span class="icon icon-link"></span></a><h1 id="ceres">Ceres</h1></div>
+```
+
+### Example: behavior substitute
+
+The following example sets `options.beavior` to `substitute` and passes
+`options.content` as a function, to generate an accessible anchor
+containing the heading text as well as an icon.
+It uses [`hastscript`][hastscript] to build nodes.
+
+```js
+import {h} from 'hastscript'
+import {toString} from 'hast-util-to-string'
+import {rehype} from 'rehype'
+import rehypeAutolinkHeadings from 'rehype-autolink-headings'
+
+const file = await rehype()
+  .data('settings', {fragment: true})
+  .use(rehypeAutolinkHeadings, {
+    behavior: 'substitute',
+    content(node) {
+      return [
+        h(null, toString(node)),
+        h('span.icon.icon-link', {ariaHidden: 'true'})
+      ]
+    }
+  })
+  .process('<h1 id="substitute">Substitute</h1>')
+
+console.log(String(file))
+```
+
+Yields:
+
+```html
+<h1 id="substitute"><a href="#substitute" tabindex="-1">Substitute<span class="icon icon-link" aria-hidden="true"></span></a></h1>
 ```
 
 ## Types
