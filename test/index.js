@@ -42,6 +42,53 @@ test('rehypeAutolinkHeadings', async function (t) {
       '<div><h1 id="a">b</h1><a data-x="y" href="#a"><i></i></a></div>'
     )
   })
+
+  await t.test('should support functions', async function () {
+    const file = await rehype()
+      .data('settings', {fragment: true})
+      .use(rehypeAutolinkHeadings, {
+        behavior: 'after',
+        content(node) {
+          assert.equal(node.properties.id, 'a')
+          return {type: 'element', tagName: 'i', properties: {}, children: []}
+        },
+        group(node) {
+          assert.equal(node.properties.id, 'a')
+          return {type: 'element', tagName: 'div', properties: {}, children: []}
+        },
+        properties(node) {
+          assert.equal(node.properties.id, 'a')
+          return {dataX: 'y'}
+        }
+      })
+      .process('<h1 id=a>b</h1>')
+
+    assert.deepEqual(
+      String(file),
+      '<div><h1 id="a">b</h1><a data-x="y" href="#a"><i></i></a></div>'
+    )
+  })
+
+  await t.test('should `content` as a function w/ `wrap`', async function () {
+    assert.deepEqual(
+      String(
+        await rehype()
+          .data('settings', {fragment: true})
+          .use(rehypeAutolinkHeadings, {
+            behavior: 'wrap',
+            content(node) {
+              assert.equal(node.properties.id, 'a')
+              return [
+                {type: 'element', tagName: 'i', properties: {}, children: []},
+                ...node.children
+              ]
+            }
+          })
+          .process('<h1 id=a>b</h1>')
+      ),
+      '<h1 id="a"><a href="#a"><i></i>b</a></h1>'
+    )
+  })
 })
 
 test('fixtures', async function (t) {

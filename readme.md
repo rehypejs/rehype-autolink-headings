@@ -208,8 +208,11 @@ Configuration (TypeScript type).
 *   `behavior` ([`Behavior`][api-behavior], default: `'prepend'`)
     — how to create links
 *   `content` ([`Array<Node>`][hast-node], `Node`, or [`Build`][api-build],
-    default: equivalent of `<span class="icon icon-link"></span>`)
-    — content to insert in the link, if `behavior` is not `'wrap'`
+    default: if `'wrap'` then `undefined`, otherwise equivalent of
+    `<span class="icon icon-link"></span>`)
+    — content to insert in the link;
+    if `behavior` is `'wrap'` and `Build` is passed, its result replaces the
+    existing content, otherwise the content is added after existing content
 *   `group` ([`Array<Node>`][hast-node], `Node`, or [`Build`][api-build],
     optional)
     — content to wrap the heading and link with, if `behavior` is `'after'` or

@@ -1,0 +1,9 @@
+{
+  "behavior": "wrap",
+  "content": {
+    "type": "element",
+    "tagName": "span",
+    "properties": {"className": ["icon", "icon-link"]},
+    "children": []
+  }
+}
