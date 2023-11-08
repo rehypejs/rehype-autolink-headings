@@ -30,31 +30,9 @@ test('rehypeAutolinkHeadings', async function (t) {
           assert.equal(node.properties.id, 'a')
           return {type: 'element', tagName: 'div', properties: {}, children: []}
         },
-        properties(node) {
+        headingProperties(node) {
           assert.equal(node.properties.id, 'a')
-          return {dataX: 'y'}
-        }
-      })
-      .process('<h1 id=a>b</h1>')
-
-    assert.deepEqual(
-      String(file),
-      '<div><h1 id="a">b</h1><a data-x="y" href="#a"><i></i></a></div>'
-    )
-  })
-
-  await t.test('should support functions', async function () {
-    const file = await rehype()
-      .data('settings', {fragment: true})
-      .use(rehypeAutolinkHeadings, {
-        behavior: 'after',
-        content(node) {
-          assert.equal(node.properties.id, 'a')
-          return {type: 'element', tagName: 'i', properties: {}, children: []}
-        },
-        group(node) {
-          assert.equal(node.properties.id, 'a')
-          return {type: 'element', tagName: 'div', properties: {}, children: []}
+          return {dataA: 'b'}
         },
         properties(node) {
           assert.equal(node.properties.id, 'a')
@@ -65,7 +43,7 @@ test('rehypeAutolinkHeadings', async function (t) {
 
     assert.deepEqual(
       String(file),
-      '<div><h1 id="a">b</h1><a data-x="y" href="#a"><i></i></a></div>'
+      '<div><h1 id="a" data-a="b">b</h1><a data-x="y" href="#a"><i></i></a></div>'
     )
   })
 

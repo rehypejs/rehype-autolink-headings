@@ -217,6 +217,9 @@ Configuration (TypeScript type).
     optional)
     — content to wrap the heading and link with, if `behavior` is `'after'` or
     `'before'`
+*   `headingProperties` ([`BuildProperties`][api-build-properties] or
+    [`Properties`][hast-properties], optional)
+    — extra properties to set on the heading
 *   `properties` ([`BuildProperties`][api-build-properties] or
     [`Properties`][hast-properties], default:
     `{ariaHidden: true, tabIndex: -1}` if `'append'` or `'prepend'`, otherwise

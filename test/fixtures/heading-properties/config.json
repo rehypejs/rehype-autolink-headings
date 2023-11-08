@@ -1,0 +1,6 @@
+{
+  "headingProperties": {
+    "className": ["foo", "bar", "baz"],
+    "dataQux": "quux"
+  }
+}
