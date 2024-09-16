@@ -304,7 +304,7 @@ build nodes from a string of HTML.
 
 ```js
 /**
- * @typedef {import('hast').ElementContent} ElementContent
+ * @import {ElementContent} from 'hast'
  */
 
 import {fromHtmlIsomorphic} from 'hast-util-from-html-isomorphic'

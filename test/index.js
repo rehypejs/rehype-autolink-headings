@@ -1,5 +1,5 @@
 /**
- * @typedef {import('rehype-autolink-headings').Options} Options
+ * @import {Options} from 'rehype-autolink-headings'
  */
 
 import assert from 'node:assert/strict'
