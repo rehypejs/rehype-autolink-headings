@@ -6,3 +6,5 @@ node_modules/
 *.tsbuildinfo
 .DS_Store
 yarn.lock
+!/lib/types.d.ts
+!/index.d.ts
