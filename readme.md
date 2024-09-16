@@ -12,27 +12,27 @@
 
 ## Contents
 
-*   [What is this?](#what-is-this)
-*   [When should I use this?](#when-should-i-use-this)
-*   [Install](#install)
-*   [Use](#use)
-*   [API](#api)
-    *   [`unified().use(rehypeAutolinkHeadings[, options])`](#unifieduserehypeautolinkheadings-options)
-    *   [`Behavior`](#behavior)
-    *   [`Build`](#build)
-    *   [`BuildProperties`](#buildproperties)
-    *   [`Options`](#options)
-*   [Examples](#examples)
-    *   [Example: different behaviors](#example-different-behaviors)
-    *   [Example: building content with `hastscript`](#example-building-content-with-hastscript)
-    *   [Example: passing content from a string of HTML](#example-passing-content-from-a-string-of-html)
-    *   [Example: group](#example-group)
-*   [Types](#types)
-*   [Compatibility](#compatibility)
-*   [Security](#security)
-*   [Related](#related)
-*   [Contribute](#contribute)
-*   [License](#license)
+* [What is this?](#what-is-this)
+* [When should I use this?](#when-should-i-use-this)
+* [Install](#install)
+* [Use](#use)
+* [API](#api)
+  * [`unified().use(rehypeAutolinkHeadings[, options])`](#unifieduserehypeautolinkheadings-options)
+  * [`Behavior`](#behavior)
+  * [`Build`](#build)
+  * [`BuildProperties`](#buildproperties)
+  * [`Options`](#options)
+* [Examples](#examples)
+  * [Example: different behaviors](#example-different-behaviors)
+  * [Example: building content with `hastscript`](#example-building-content-with-hastscript)
+  * [Example: passing content from a string of HTML](#example-passing-content-from-a-string-of-html)
+  * [Example: group](#example-group)
+* [Types](#types)
+* [Compatibility](#compatibility)
+* [Security](#security)
+* [Related](#related)
+* [Contribute](#contribute)
+* [License](#license)
 
 ## What is this?
 
@@ -143,8 +143,8 @@ Add links from headings back to themselves.
 
 ###### Parameters
 
-*   `options` ([`Options`][api-options], optional)
-    — configuration
+* `options` ([`Options`][api-options], optional)
+  — configuration
 
 ###### Returns
 
@@ -157,11 +157,11 @@ Use `rehype-slug` to generate `id`s for headings that don’t have them.
 
 Several behaviors are supported:
 
-*   `'prepend'` (default) — inject link before the heading text
-*   `'append'` — inject link after the heading text
-*   `'wrap'` — wrap the whole heading text with the link
-*   `'before'` — insert link before the heading
-*   `'after'` — insert link after the heading
+* `'prepend'` (default) — inject link before the heading text
+* `'append'` — inject link after the heading text
+* `'wrap'` — wrap the whole heading text with the link
+* `'before'` — insert link before the heading
+* `'after'` — insert link after the heading
 
 ### `Behavior`
 
@@ -179,8 +179,8 @@ Generate content (TypeScript type).
 
 ###### Parameters
 
-*   `element` ([`Element`][hast-element])
-    — current heading
+* `element` ([`Element`][hast-element])
+  — current heading
 
 ###### Returns
 
@@ -192,8 +192,8 @@ Generate properties (TypeScript type).
 
 ###### Parameters
 
-*   `element` ([`Element`][hast-element])
-    — current heading
+* `element` ([`Element`][hast-element])
+  — current heading
 
 ###### Returns
 
@@ -205,28 +205,28 @@ Configuration (TypeScript type).
 
 ###### Fields
 
-*   `behavior` ([`Behavior`][api-behavior], default: `'prepend'`)
-    — how to create links
-*   `content` ([`Array<Node>`][hast-node], `Node`, or [`Build`][api-build],
-    default: if `'wrap'` then `undefined`, otherwise equivalent of
-    `<span class="icon icon-link"></span>`)
-    — content to insert in the link;
-    if `behavior` is `'wrap'` and `Build` is passed, its result replaces the
-    existing content, otherwise the content is added after existing content
-*   `group` ([`Array<Node>`][hast-node], `Node`, or [`Build`][api-build],
-    optional)
-    — content to wrap the heading and link with, if `behavior` is `'after'` or
-    `'before'`
-*   `headingProperties` ([`BuildProperties`][api-build-properties] or
-    [`Properties`][hast-properties], optional)
-    — extra properties to set on the heading
-*   `properties` ([`BuildProperties`][api-build-properties] or
-    [`Properties`][hast-properties], default:
-    `{ariaHidden: true, tabIndex: -1}` if `'append'` or `'prepend'`, otherwise
-    `undefined`)
-    — extra properties to set on the link when injecting
-*   `test` ([`Test`][hast-util-is-element-test], optional)
-    — extra test for which headings are linked
+* `behavior` ([`Behavior`][api-behavior], default: `'prepend'`)
+  — how to create links
+* `content` ([`Array<Node>`][hast-node], `Node`, or [`Build`][api-build],
+  default: if `'wrap'` then `undefined`, otherwise equivalent of
+  `<span class="icon icon-link"></span>`)
+  — content to insert in the link;
+  if `behavior` is `'wrap'` and `Build` is passed, its result replaces the
+  existing content, otherwise the content is added after existing content
+* `group` ([`Array<Node>`][hast-node], `Node`, or [`Build`][api-build],
+  optional)
+  — content to wrap the heading and link with, if `behavior` is `'after'` or
+  `'before'`
+* `headingProperties` ([`BuildProperties`][api-build-properties] or
+  [`Properties`][hast-properties], optional)
+  — extra properties to set on the heading
+* `properties` ([`BuildProperties`][api-build-properties] or
+  [`Properties`][hast-properties], default:
+  `{ariaHidden: true, tabIndex: -1}` if `'append'` or `'prepend'`, otherwise
+  `undefined`)
+  — extra properties to set on the link when injecting
+* `test` ([`Test`][hast-util-is-element-test], optional)
+  — extra test for which headings are linked
 
 ## Examples
 
@@ -394,12 +394,12 @@ Always be wary of user input and use [`rehype-sanitize`][rehype-sanitize].
 
 ## Related
 
-*   [`rehype-slug`][rehype-slug]
-    — add `id`s to headings
-*   [`rehype-highlight`](https://github.com/rehypejs/rehype-highlight)
-    — apply syntax highlighting to code blocks
-*   [`rehype-toc`](https://github.com/JS-DevTools/rehype-toc)
-    — add a table of contents (TOC)
+* [`rehype-slug`][rehype-slug]
+  — add `id`s to headings
+* [`rehype-highlight`](https://github.com/rehypejs/rehype-highlight)
+  — apply syntax highlighting to code blocks
+* [`rehype-toc`](https://github.com/JS-DevTools/rehype-toc)
+  — add a table of contents (TOC)
 
 ## Contribute
 
